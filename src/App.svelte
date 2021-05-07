@@ -5,21 +5,18 @@
     import { setContext } from "svelte";
     import Navigator from "./components/Navigator.svelte";
     import Router from "svelte-spa-router";
+    import Main from "./pages/Main.svelte"
 
     const url = `http://jd-2.local:4000/api/users`;
 
     setContext("UserService", new UserService("http://jd-2.local:4000"));
 
 
-  import {navBar, mainBar, subTitle, title} from "./stores"
+  import {navBar, subTitle, title} from "./stores"
 
-  title.set("Donation Services Inc.");
-  subTitle.set("All Current Candidates");
-  navBar.set({
-    bar: mainBar
-  });
 
     let routes = {
+      "/": Main
     //"/signup": Candidates,
     //"/login": Donations,
   }
