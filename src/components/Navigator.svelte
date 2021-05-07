@@ -3,7 +3,8 @@
   import {navBar} from "../stores"
 </script>
 
-<div class="uk-flex uk-flex-center uk-flex-middle uk-text-center uk-grid-small" uk-grid>
+
+<div class="uk-flex uk-flex-center uk-margin uk-flex-middle uk-grid-small uk-grid-small" uk-grid>
   <Title />
   <div>
     <ul class="uk-iconnav uk-margin-left">

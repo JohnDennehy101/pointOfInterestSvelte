@@ -5,7 +5,8 @@
     import { setContext } from "svelte";
     import Navigator from "./components/Navigator.svelte";
     import Router from "svelte-spa-router";
-    import Main from "./pages/Main.svelte"
+    import Main from "./pages/Main.svelte";
+    import Login from "./pages/Login.svelte";
 
     const url = `http://jd-2.local:4000/api/users`;
 
@@ -16,7 +17,8 @@
 
 
     let routes = {
-      "/": Main
+      "/": Main,
+      "/login": Login,
     //"/signup": Candidates,
     //"/login": Donations,
   }
@@ -35,8 +37,9 @@
   })
   </script>
 
-<div class="uk-container">
+
   <Navigator/>
+  <div class="uk-container">
 
    <Router {routes} />
 
