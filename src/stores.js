@@ -41,3 +41,5 @@ export const user = writable({
  email: "",
  token: ""
 });
+
+export const viewMonumentId = writable("");

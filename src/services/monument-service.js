@@ -2,6 +2,7 @@ import axios from "axios";
 
 export class MonumentService {
   monumentList = [];
+  individualMonument;
   baseUrl = "";
 
   constructor(baseUrl) {
@@ -17,6 +18,17 @@ export class MonumentService {
 
       this.monumentList = response.data;
       return this.monumentList;
+    } catch (error) {
+      return [];
+    }
+  }
+
+  async getIndividualMonument(id) {
+    try {
+      const response = await axios.get(this.baseUrl + "/api/monuments/" + id);
+
+      this.monument = response.data;
+      return this.monument;
     } catch (error) {
       return [];
     }

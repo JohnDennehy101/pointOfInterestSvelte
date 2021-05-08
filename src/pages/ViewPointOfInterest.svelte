@@ -1,0 +1,92 @@
+<script>
+import {title, subTitle, navBar, loggedInUserBar, viewMonumentId} from "../stores";
+import {onMount, getContext} from 'svelte';
+console.log(viewMonumentId);
+
+//let test5 = viewMonumentId.subscribe()
+console.log($viewMonumentId);
+
+
+import MonumentList from "../components/MonumentList.svelte";
+  title.set("Monuments");
+  subTitle.set("Detailed View");
+
+  navBar.set({
+    bar: loggedInUserBar
+  });
+  const monumentService = getContext("MonumentService");
+  let monument = [];
+
+onMount(async () => {
+    monument = await monumentService.getIndividualMonument($viewMonumentId);
+    console.log(monument);
+  })
+</script>
+
+<h1 class="uk-heading-medium uk-text-center">{monument.title}</h1>
+
+<div class="uk-container uk-margin">
+    <div class="uk-text-center uk-grid">
+        <div class="uk-width-expand@m uk-first-column">
+
+            <!-- {{> viewPointOfInterestImage }}
+            {{> viewImageFullScreen }} -->
+
+            <div class="uk-text-center uk-text-small uk-grid uk-margin-top" uk-grid>
+                <!-- <div class="uk-width-expand@m uk-first-column">
+                    {{> monumentCategoriesComponent}}
+
+                </div>
+
+                <div class="uk-width-1-2@m">
+                    {{> monumentCoordinatesComponent}}
+
+
+                </div> -->
+
+
+            </div>
+
+
+            <!-- {{#if weatherAvailable}}
+            <div class="uk-text-center uk-text-small uk-margin uk-width-expand@m">
+                <div class="uk-card uk-card-default uk-card-body uk-padding-small">
+                    <h4 class="uk-text-primary">Current Weather</h4>
+                    <div class="uk-child-width-expand@s uk-text-center" uk-grid>
+                        {{> weatherOverviewComponent}}
+                        {{> temperatureOverviewComponent}}
+                        {{> sunsetOverviewComponent}}
+                    </div>
+                    {{> weatherOverviewTable}}
+                </div>
+
+            </div>
+
+
+            <div class="uk-text-center uk-text-small uk-margin uk-width-expand@m">
+                <div class="uk-card uk-card-default uk-card-body uk-padding-small">
+                    <h4 class="uk-text-primary">Weather Forecast</h4>
+                     {{> weatherForecastTable}}
+                </div>
+
+            </div> -->
+            <!-- {{else}}
+            {{> noWeatherDataComponent}}
+
+            {{/if}} -->
+
+
+
+
+        </div>
+
+        <div class="uk-width-1-3@m">
+
+            <div class="uk-container">
+                {monument.description}
+            </div>
+
+
+        </div>
+    </div>
+</div>

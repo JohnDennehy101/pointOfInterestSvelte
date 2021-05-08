@@ -2,12 +2,19 @@
   import {onMount, getContext} from 'svelte'
   import { MonumentService } from "../services/monument-service";
 
+  import {viewMonumentId} from "../stores";
+
   const monumentService = getContext("MonumentService");
 
   let monumentList = [];
   onMount(async () => {
     monumentList = await monumentService.getMonuments();
-    console.log(monumentList)
+  })
+
+  let test = ((id) => {
+      console.log(id);
+      viewMonumentId.set(id);
+   
   })
 </script>
 
@@ -38,7 +45,7 @@
                         </a>
                     </div>
                     <div class="uk-width-1-3@m">
-                        <a href="viewMonument/{monument._id}" class="uk-button uk-button-text">View</a>
+                        <a href="/#/viewMonument/{monument._id}" on:click={test(monument._id)} class="uk-button uk-button-text">View</a>
                     </div>
                     <div class="uk-width-1-3@m">
                         <a href="editMonumentView/{monument._id}" class="editMonumentButton"><span
