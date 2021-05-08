@@ -12,6 +12,24 @@ export const welcomeBar = [{
   link: "/#/login",
 }];
 
+export const loggedInUserBar = [{
+  title: "Add Monument",
+  icon: "fas fa-plus-circle fa-3x",
+  colour: "color:rgb(153, 196, 74)",
+  link: "/#/addMonument",
+}, {
+  title: "Report",
+  icon: "fas fa-th-list fa-3x",
+  colour: "color:rgb(63, 122, 139)",
+  link: "/#/report",
+},
+{
+  title: "Logout",
+  icon: "fas fa-sign-out-alt fa-3x",
+  colour: "color:rgb(156, 70, 128)",
+  link: "/#/logout",
+}];
+
 export const navBar = writable({
   bar: [],
 });

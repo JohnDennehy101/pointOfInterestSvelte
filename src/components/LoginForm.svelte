@@ -8,8 +8,6 @@
   let errorMessage = "";
 
   async function login() {
-      console.log(email);
-      console.log(password);
     let success = await userService.login(email, password);
     if (success) {
       push("/report");

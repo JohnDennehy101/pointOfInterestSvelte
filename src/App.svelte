@@ -2,6 +2,7 @@
     //Move api calls out to components to tidy up
     import {onMount, getContext} from 'svelte'
     import { UserService } from "./services/user-service";
+    import { MonumentService } from "./services/monument-service";
     import { setContext } from "svelte";
     import Navigator from "./components/Navigator.svelte";
     import Router from "svelte-spa-router";
@@ -9,9 +10,8 @@
     import Login from "./pages/Login.svelte";
     import Report from "./pages/Report.svelte";
 
-    const url = `http://jd-2.local:4000/api/users`;
-
     setContext("UserService", new UserService("http://jd-2.local:4000"));
+    setContext("MonumentService", new MonumentService("http://jd-2.local:4000"));
 
 
   import {navBar, subTitle, title} from "./stores"
@@ -26,17 +26,6 @@
   }
 
    
-//This would be moved out to externals
-     //const userService = getContext("UserService");
-
-
-    let userList;
-  // onMount(async () => {
-  //   //const response = await fetch(url)
-  //   userList = await userService.getUsers();
-  //   //candidateList = await response.json();
-  //   console.log(userList)
-  // })
   </script>
 
 
