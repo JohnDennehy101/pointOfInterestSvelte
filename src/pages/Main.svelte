@@ -1,5 +1,8 @@
 <script>
-  import {title, subTitle, navBar, welcomeBar} from "../stores"
+  import {title, subTitle, navBar, welcomeBar} from "../stores";
+  import {onMount, getContext} from 'svelte';
+  import { push } from "svelte-spa-router";
+  const userService = getContext("UserService");
 //   import homer2 from "/src/assets/homer2.png";
   title.set("Point of Interest Application");
   subTitle.set("Sign up or Log in");
@@ -9,6 +12,13 @@
   navBar.set({
     bar: welcomeBar
   });
+
+  onMount(async () => {
+      await userService.logout();
+      push("/");
+  })
+
+
 </script>
 
 <!-- <div class="uk-flex uk-flex-center uk-flex-middle uk-grid-small" uk-grid>

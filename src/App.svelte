@@ -21,6 +21,7 @@
       "/": Main,
       "/login": Login,
       "/report": Report,
+      "/logout": Main
     //"/signup": Candidates,
     
   }

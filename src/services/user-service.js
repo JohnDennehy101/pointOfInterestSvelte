@@ -40,4 +40,13 @@ export class UserService {
       return false;
     }
   }
+
+  async logout() {
+    user.set({
+      email: "",
+      token: ""
+    });
+    axios.defaults.headers.common["Authorization"] = "";
+    localStorage.user = null;
+  }
 }
