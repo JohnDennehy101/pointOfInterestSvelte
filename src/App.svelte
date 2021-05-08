@@ -1,12 +1,13 @@
   <script>
     //Move api calls out to components to tidy up
     import {onMount, getContext} from 'svelte'
-    import { UserService } from "./user-service";
+    import { UserService } from "./services/user-service";
     import { setContext } from "svelte";
     import Navigator from "./components/Navigator.svelte";
     import Router from "svelte-spa-router";
     import Main from "./pages/Main.svelte";
     import Login from "./pages/Login.svelte";
+    import Report from "./pages/Report.svelte";
 
     const url = `http://jd-2.local:4000/api/users`;
 
@@ -19,22 +20,23 @@
     let routes = {
       "/": Main,
       "/login": Login,
+      "/report": Report,
     //"/signup": Candidates,
-    //"/login": Donations,
+    
   }
 
    
 //This would be moved out to externals
-     const userService = getContext("UserService");
+     //const userService = getContext("UserService");
 
 
     let userList;
-  onMount(async () => {
-    //const response = await fetch(url)
-    userList = await userService.getUsers();
-    //candidateList = await response.json();
-    console.log(userList)
-  })
+  // onMount(async () => {
+  //   //const response = await fetch(url)
+  //   userList = await userService.getUsers();
+  //   //candidateList = await response.json();
+  //   console.log(userList)
+  // })
   </script>
 
 

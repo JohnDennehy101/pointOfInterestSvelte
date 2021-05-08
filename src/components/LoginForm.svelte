@@ -1,12 +1,23 @@
 <script>
   import { push } from "svelte-spa-router";
+  import {getContext} from "svelte";
+  const userService = getContext("UserService");
 
   let email = ""
   let password = "";
   let errorMessage = "";
 
   async function login() {
-    push("/candidates");
+      console.log(email);
+      console.log(password);
+    let success = await userService.login(email, password);
+    if (success) {
+      push("/report");
+    } else {
+      email = "";
+      password = "";
+      errorMessage = "Invalid Credentials";
+    }
   }
 </script>
 
