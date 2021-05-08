@@ -4,15 +4,15 @@
 
   const monumentService = getContext("MonumentService");
 
-  let monumentList;
+  let monumentList = [];
   onMount(async () => {
     monumentList = await monumentService.getMonuments();
     console.log(monumentList)
   })
 </script>
 
-<p>testing...</p>
-<!-- <div class="uk-grid-medium uk-child-width-1-3@m" uk-grid uk-height-match="target: > div > .uk-card > .uk-card-body">
+
+<div class="uk-grid-medium uk-child-width-1-3@m" uk-grid uk-height-match="target: > div > .uk-card > .uk-card-body">
     {#each monumentList as monument}
     <div>
         <div class="uk-card uk-card-default">
@@ -53,4 +53,4 @@
         </div>
     </div>
     {/each}
-</div> -->
+</div>

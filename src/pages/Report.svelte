@@ -10,5 +10,9 @@ import MonumentList from "../components/MonumentList.svelte";
 </script>
 
 
-<p>Testing...</p>
-<MonumentList />
+
+<div class="uk-child-width-expand uk-flex-center uk-flex-middle uk-text-center" uk-grid>
+    <div class="uk-width-expand@m">
+<MonumentList /> 
+</div>
+</div>

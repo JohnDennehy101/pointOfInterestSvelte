@@ -1,11 +1,14 @@
 import axios from "axios";
-
+import {user} from "../stores"
 export class UserService {
   userList = [];
   baseUrl = "";
 
   constructor(baseUrl) {
     this.baseUrl = baseUrl;
+     if (localStorage.user) {
+      axios.defaults.headers.common["Authorization"] = "Bearer " + JSON.parse(localStorage.user);
+    }
   }
 
   async getUsers() {
@@ -22,9 +25,18 @@ export class UserService {
     try {
       console.log(this.baseUrl);
       const response = await axios.post(`${this.baseUrl}/api/users/authenticate`, {email, password});
-      console.log(response.status);
-      return response.status == 201;
-    } catch (error) {
+       if (response.data.success) {
+        axios.defaults.headers.common["Authorization"] = "Bearer " + response.data.token;
+        user.set({
+          email: email,
+          token: response.data.token
+        });
+        localStorage.user = JSON.stringify(response.data.token);
+        return true;
+    }
+    
+  }
+  catch (error) {
       return false;
     }
   }
