@@ -8,6 +8,7 @@
     import Router from "svelte-spa-router";
     import Main from "./pages/Main.svelte";
     import Login from "./pages/Login.svelte";
+    import Signup from "./pages/Signup.svelte";
     import Report from "./pages/Report.svelte";
 
     setContext("UserService", new UserService("http://jd-2.local:4000"));
@@ -20,9 +21,10 @@
     let routes = {
       "/": Main,
       "/login": Login,
+      "/signup": Signup,
       "/report": Report,
       "/logout": Main
-    //"/signup": Candidates,
+  
     
   }
 

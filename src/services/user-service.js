@@ -21,9 +21,19 @@ export class UserService {
     }
   }
 
+  async signUp(newUser) {
+  try {
+      const response = await axios.post(`${this.baseUrl}/api/users`, newUser);
+      const success = await this.login(newUser.email, newUser.password);
+      return success;
+  }
+  catch (error) {
+    return false;
+  }
+  }
+
   async login(email, password) {
     try {
-      console.log(this.baseUrl);
       const response = await axios.post(`${this.baseUrl}/api/users/authenticate`, {email, password});
        if (response.data.success) {
         axios.defaults.headers.common["Authorization"] = "Bearer " + response.data.token;
