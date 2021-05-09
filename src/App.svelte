@@ -11,6 +11,7 @@
     import Signup from "./pages/Signup.svelte";
     import Report from "./pages/Report.svelte";
     import ViewPointOfInterest from "./pages/ViewPointOfInterest.svelte";
+    import AddPointOfInterest from "./pages/AddPointOfInterest.svelte";
 
     setContext("UserService", new UserService("http://jd-2.local:4000"));
     setContext("MonumentService", new MonumentService("http://jd-2.local:4000"));
@@ -25,6 +26,7 @@
       "/signup": Signup,
       "/report": Report,
       "/logout": Main,
+      "/addMonument": AddPointOfInterest, 
       "/viewMonument/:id": ViewPointOfInterest
   
     

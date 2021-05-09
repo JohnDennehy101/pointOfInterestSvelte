@@ -58,5 +58,6 @@ export class UserService {
     });
     axios.defaults.headers.common["Authorization"] = "";
     localStorage.user = null;
+    localStorage.monument = null;
   }
 }
