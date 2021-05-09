@@ -1,4 +1,7 @@
 import axios from "axios";
+import {Buffer} from "buffer";
+//import fs from 'fs';
+
 
 export class MonumentService {
   monumentList = [];
@@ -16,28 +19,28 @@ export class MonumentService {
   }
 
   async addMonument(monument) {
-try {
-    let form = new FormData();
+    let requestForm = new FormData();
 
-     form.append('title', String(monument.title));
-      form.append('description', String(monument.description));
-      form.append('latitude', String(monument.coordinates.latitude));
-      form.append('longitude', String(monument.coordinates.longitude));
-      form.append('county', String(monument.county));
-      form.append('province', String(monument.province));
-    //   requestFormData.append('test', 'true');
-    //   const image = fs.createReadStream(path.join(__dirname, './testImages/castle.jpg'));
-      form.append('imageUpload',  monument.images);
-      const response = await axios.post(this.baseUrl + "/api/monuments", form);
+     requestForm.append('title', String(monument.title));
+      requestForm.append('description', String(monument.description));
+      requestForm.append('latitude', String(monument.latitude));
+      requestForm.append('longitude', String(monument.longitude));
+      requestForm.append('county', String(monument.county));
+      requestForm.append('province', String(monument.province));
+    for (let i=0; i<monument.images.length; i++) {
+        requestForm.append("imageUpload", monument.images[i])
+    }
+   
+      const response = await axios.post(this.baseUrl + "/api/monuments", requestForm, //{
+        
+      );
 
-    //   this.newMonument = response.data;
-    //   return this.newMonument;
+      this.newMonument = response.data;
+      return this.newMonument;
     if (response) {
         return true;
     }
-    } catch (error) {
-      return false;
-    }
+    
   }
 
   async getMonuments() {

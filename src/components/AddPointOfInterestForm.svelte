@@ -71,6 +71,10 @@ function deletePreviousCountyOptions(countySelectField) {
     
   };
 
+  let changeCountyValue = (e) => {
+      county = e.target.value;
+  }
+
   let addNewCategory = () => {
       console.log(newCategoryTitle);
                 if (newCategoryTitle.length > 1) {
@@ -116,6 +120,9 @@ function deletePreviousCountyOptions(countySelectField) {
 
 
                 let readImageFiles = async function (input) {
+                    console.log(input);
+                    console.log(input.target.files);
+                    images=input.target.files;
                 let allFiles = input.target.files;
                 if (allFiles.length < 2 && allFiles.length > 0) {
                     let file = input.target.files[0];
@@ -166,13 +173,14 @@ function deletePreviousCountyOptions(countySelectField) {
         "images": images
 
     }
+
+    console.log(monument);
     let success = await monumentService.addMonument(monument);
+    console.log(success);
     if (success) {
       push("/report");
     } else {
-      email = "";
-      password = "";
-      errorMessage = "Invalid Credentials";
+     console.log("failing on addition of monument")
     }
   }
 
@@ -212,7 +220,7 @@ function deletePreviousCountyOptions(countySelectField) {
 
                 <div bind:this={countyContainer} class="uk-margin" style="display:none" id="countyContainer">
                     <div class="uk-form-label">County</div>
-                    <select bind:this={countySelectField} bind:value={county} class="uk-select" name="county" id="countySelectField">
+                    <select on:change={changeCountyValue} bind:this={countySelectField} class="uk-select" name="county" id="countySelectField">
                         <option value="" disabled selected>Select County</option>
 
                     </select>
@@ -278,7 +286,7 @@ function deletePreviousCountyOptions(countySelectField) {
             <div class="uk-margin">
                 <div class="uk-form-label">Image</div>
                 <div uk-form-custom on:click={removePriorImagePreviewElements}>
-                    <input type="file" on:change={readImageFiles} bind:value={images} accept="image/x-png,image/gif,image/jpeg" name="imageUpload" id="imageInput"
+                    <input type="file" on:change={readImageFiles} accept="image/x-png,image/gif,image/jpeg" name="imageUpload" id="imageInput"
                         multiple>
                     <button class="uk-button uk-button-secondary" type="button" tabindex="-1" name='test'>Add Monument
                         Image</button>
@@ -298,7 +306,7 @@ function deletePreviousCountyOptions(countySelectField) {
 
 <div class="uk-width-1@m">
             <div class="uk-margin">
-                <button class="submit uk-button uk-margin-top uk-button-primary uk-button-large uk-width-1-1">Add
+                <button on:click={addMonument} class="submit uk-button uk-margin-top uk-button-primary uk-button-large uk-width-1-1">Add
                     Monument</button>
             </div>
         </div>
