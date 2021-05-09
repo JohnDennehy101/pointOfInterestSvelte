@@ -1,11 +1,7 @@
 <script>
-import {title, subTitle, navBar, loggedInUserBar, viewMonumentId} from "../stores";
-import {onMount, getContext} from 'svelte';
-console.log(viewMonumentId);
-
-//let test5 = viewMonumentId.subscribe()
-console.log($viewMonumentId);
-
+import {title, subTitle, navBar, loggedInUserBar} from "../stores";
+import {onMount, getContext, setContext} from 'svelte';
+import ViewPointOfInterestImage from "../components/ViewPointOfInterestImage.svelte"; 
 
 import MonumentList from "../components/MonumentList.svelte";
   title.set("Monuments");
@@ -15,21 +11,24 @@ import MonumentList from "../components/MonumentList.svelte";
     bar: loggedInUserBar
   });
   const monumentService = getContext("MonumentService");
-  let monument = [];
+  let monument;
 
 onMount(async () => {
-    monument = await monumentService.getIndividualMonument($viewMonumentId);
-    console.log(monument);
+    let id = JSON.parse(localStorage.monument);
+    monument = await monumentService.getIndividualMonument(id);
+    
+  
   })
 </script>
-
+{#if monument}
 <h1 class="uk-heading-medium uk-text-center">{monument.title}</h1>
 
 <div class="uk-container uk-margin">
     <div class="uk-text-center uk-grid">
         <div class="uk-width-expand@m uk-first-column">
 
-            <!-- {{> viewPointOfInterestImage }}
+<ViewPointOfInterestImage monumentImages={monument.images} />
+   <!-- {{> viewPointOfInterestImage }}
             {{> viewImageFullScreen }} -->
 
             <div class="uk-text-center uk-text-small uk-grid uk-margin-top" uk-grid>
@@ -90,3 +89,4 @@ onMount(async () => {
         </div>
     </div>
 </div>
+{/if}
