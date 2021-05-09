@@ -13,11 +13,11 @@ let countyContainer;
   let latitude = "";
   let images;
   let categories;
+  let preview;
 
 
   onMount(async() => {
 categories = await monumentService.getNonProvinceCategories();
-console.log(categories);
   })
   const munsterCounties = ['Cork', 'Clare', 'Kerry', 'Limerick', 'Tipperary', 'Waterford'];
   const leinsterCounties = ['Dublin', 'Wicklow', 'Kildare', 'Meath', 'Westmeath', 'Offaly', 'Kilkenny', 'Laois', 'Wexford', 'Carlow', 'Louth'];
@@ -68,6 +68,78 @@ function deletePreviousCountyOptions(countySelectField) {
                 }
     
   };
+
+ function imgPreviewLi(readerResult, filename) {
+                const li = document.createElement("li");
+                const div = document.createElement("div");
+                const img = document.createElement("img");
+                const span = document.createElement("span");
+                li.className = "list-item uk-margin-medium-top";
+                div.className = "uk-cover-container";
+                img.className = "delete-img-preview";
+                img.setAttribute("id", "img-preview-responsive");
+                img.setAttribute("src", readerResult);
+                img.setAttribute("name", "image")
+                img.setAttribute("data-name", filename);
+                img.setAttribute("alt", "file-image-preview");
+                span.className = "uk-text-meta uk-text-break file-upload-name";
+                span.textContent = filename;
+                div.append(img);
+                li.append(div, span);
+                return li;
+            }
+
+
+            let removePriorImagePreviewElements = (e) => {
+                let imgPreviewElems = preview.children
+                Array.from(imgPreviewElems).forEach(function (element) {
+                    preview.removeChild(element)
+                });
+            };
+
+
+
+
+                let readImageFiles = async function (input) {
+                let allFiles = input.target.files;
+                if (allFiles.length < 2 && allFiles.length > 0) {
+                    let file = input.target.files[0];
+                    let fileName = input.target.files[0].name;
+                    let reader = new FileReader();
+                    if (preview.childNodes.length < 1) {
+                        reader.onload = function () {
+                            let imageResult = imgPreviewLi(reader.result, fileName)
+                            preview.append(imageResult)
+                        };
+                        reader.readAsDataURL(file);
+                        reader.onerror = function () {
+                            console.log(reader.error);
+                        };
+                    }
+                }
+                else if (allFiles.length >= 2) {
+                    let file = ''
+                    for (let i = 0; i < allFiles.length; i++) {
+                        let file = await allFiles[i];
+                        let fileName = allFiles[i].name;
+                        let reader = new FileReader();
+                        reader.onload = function () {
+                            let imageResult = imgPreviewLi(reader.result, fileName)
+                            preview.append(imageResult)
+                        };
+                        reader.readAsDataURL(file);
+                        reader.onerror = function () {
+                            console.log(reader.error);
+                        };
+                    }
+                }
+               
+            }
+
+
+
+
+
   async function addMonument() {
     let monument = {
         "title": title,
@@ -190,16 +262,16 @@ function deletePreviousCountyOptions(countySelectField) {
 
             <div class="uk-margin">
                 <div class="uk-form-label">Image</div>
-                <div uk-form-custom>
-                    <input type="file" bind:value={images} accept="image/x-png,image/gif,image/jpeg" name="imageUpload" id="imageInput"
-                        onchange="readFile(this)" multiple>
+                <div uk-form-custom on:click={removePriorImagePreviewElements}>
+                    <input type="file" on:change={readImageFiles} bind:value={images} accept="image/x-png,image/gif,image/jpeg" name="imageUpload" id="imageInput"
+                        multiple>
                     <button class="uk-button uk-button-secondary" type="button" tabindex="-1" name='test'>Add Monument
                         Image</button>
                 </div>
                 <!-- {{> error}} -->
             </div>
 
-            <ul id="preview"
+            <ul bind:this={preview} id="preview"
                 class="uk-list uk-grid-match uk-child-width-1-2 uk-child-width-1-4@l uk-child-width-1-5@xl uk-text-center"
                 uk-grid uk-scrollspy="cls: uk-animation-scale-up; target: .list-item; delay: 80"></ul>
 
