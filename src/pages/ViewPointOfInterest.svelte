@@ -2,7 +2,8 @@
 import {title, subTitle, navBar, loggedInUserBar} from "../stores";
 import {onMount, getContext, setContext} from 'svelte';
 import ViewPointOfInterestImage from "../components/ViewPointOfInterestImage.svelte"; 
-import ViewImageFullScreen from "../components/ViewImageFullScreen.svelte"; 
+import ViewImageFullScreen from "../components/ViewImageFullScreen.svelte";
+import MonumentCategoriesComponent from  "../components/MonumentCategoriesComponent.svelte";
 
 import MonumentList from "../components/MonumentList.svelte";
   title.set("Monuments");
@@ -32,11 +33,14 @@ onMount(async () => {
 <ViewImageFullScreen monumentImages={monument.images} />
 
             <div class="uk-text-center uk-text-small uk-grid uk-margin-top" uk-grid>
-                <!-- <div class="uk-width-expand@m uk-first-column">
-                    {{> monumentCategoriesComponent}}
+                <div class="uk-width-expand@m uk-first-column">
+                    <!-- {{> monumentCategoriesComponent}} -->
+
+                    <MonumentCategoriesComponent monumentCategories={monument.categories} />
+
 
                 </div>
-
+<!-- 
                 <div class="uk-width-1-2@m">
                     {{> monumentCoordinatesComponent}}
 
