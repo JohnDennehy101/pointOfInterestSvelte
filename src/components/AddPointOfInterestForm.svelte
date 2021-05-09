@@ -14,6 +14,8 @@ let countyContainer;
   let images;
   let categories;
   let preview;
+  let newCategoryTitle;
+  let categoryDivContainer;
 
 
   onMount(async() => {
@@ -68,6 +70,19 @@ function deletePreviousCountyOptions(countySelectField) {
                 }
     
   };
+
+  let addNewCategory = () => {
+      console.log(newCategoryTitle);
+                if (newCategoryTitle.length > 1) {
+                    let checkboxParentDiv = document.createElement('div')
+                    checkboxParentDiv.classList.add('uk-width-expand@m')
+                    let checkboxLabel = document.createElement('label')
+                    checkboxLabel.innerHTML = `<input class="uk-checkbox" name="category" value=${newCategoryTitle} type="checkbox"> ${newCategoryTitle}`
+                    checkboxParentDiv.appendChild(checkboxLabel)
+                    categoryDivContainer.appendChild(checkboxParentDiv)
+                    newCategoryTitle = "";
+                }
+  }
 
  function imgPreviewLi(readerResult, filename) {
                 const li = document.createElement("li");
@@ -225,7 +240,7 @@ function deletePreviousCountyOptions(countySelectField) {
 
 
                 {#if categories}
-                <div class="uk-margin" id="categoryDivContainer">
+                <div bind:this={categoryDivContainer} class="uk-margin" id="categoryDivContainer">
                     <div class="uk-form-label">Existing Categories</div>
                     {#each categories as individualCategory}
                     <div class="uk-width-expand@m">
@@ -247,11 +262,11 @@ function deletePreviousCountyOptions(countySelectField) {
                     <div class="uk-form-label">New Category</div>
                     <div class="uk-form-controls">
 
-                        <input class="uk-input" id="newCategoryInputField" type="text"
+                        <input class="uk-input" bind:value={newCategoryTitle} id="newCategoryInputField" type="text"
                             placeholder="Enter Category Title" />
                     </div>
 
-                    <button class="uk-button uk-button-default uk-margin-top" id="addNewCategoryButton" type="button"
+                    <button on:click={addNewCategory} class="uk-button uk-button-default uk-margin-top" id="addNewCategoryButton" type="button"
                         tabindex="-1">Add Category</button>
 
                 </div>
