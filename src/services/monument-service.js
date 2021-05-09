@@ -4,6 +4,7 @@ export class MonumentService {
   monumentList = [];
   individualMonument;
   baseUrl = "";
+  weatherData;
 
   constructor(baseUrl) {
     this.baseUrl = baseUrl;
@@ -29,6 +30,17 @@ export class MonumentService {
 
       this.monument = response.data;
       return this.monument;
+    } catch (error) {
+      return [];
+    }
+  }
+
+  async getMonumentWeather(id) {
+ try {
+      const response = await axios.get(this.baseUrl + "/api/monuments/" + id + "/weather");
+
+      this.weatherData= response.data;
+      return this.weatherData;
     } catch (error) {
       return [];
     }
