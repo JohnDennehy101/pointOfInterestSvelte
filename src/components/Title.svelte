@@ -1,31 +1,41 @@
 <script>
-    import {title, subTitle} from "../stores.js"
+  import { title, subTitle } from "../stores.js";
 </script>
 
-<div class="uk-width-2-3@m uk-card uk-card-default uk-padding-small uk-visible@m uk-first-column">
-    <div class="uk-grid">
-        <div class="uk-width-1-6@m">
-            <i class="fas fa-landmark fa-3x"></i>
+<div
+  class="uk-width-2-3@m uk-card uk-card-default uk-padding-small uk-visible@m uk-first-column"
+>
+  <div class="uk-grid">
+    <div class="uk-width-1-6@m">
+      <i class="fas fa-landmark fa-3x" />
+    </div>
+    <div class="uk-width-expand@m uk-text-left">
+      <div class="title">
+        {$title}
+      </div>
+      <div class="uk-text-muted uk-text-small">
+        {$subTitle}
+      </div>
+    </div>
+    <div class="uk-card uk-card-small uk-text-center uk-padding-remove">
+      <a
+        target="_blank"
+        href="https://www.archaeology.ie/national-monuments/search-by-county"
+      >
+        <div>
+          <i
+            class="fas fa-link fa-3x"
+            style="color:rgb(95, 96, 173)"
+            title="Link to archive of Irish monuments"
+            uk-tooltip
+          />
         </div>
         <div class="uk-width-expand@m uk-text-left">
-            <div class="title">
-                {$title}
-            </div>
-            <div class="uk-text-muted uk-text-small">
-                {$subTitle}
-            </div>
+          <div class="uk-text-muted uk-text-center" style="font-size:xx-small">
+            Monument Archive
+          </div>
         </div>
-        <div class="uk-card uk-card-small uk-text-center uk-padding-remove">
-            <a target="_blank" href="https://www.archaeology.ie/national-monuments/search-by-county">
-                <div>
-                    <i class="fas fa-link fa-3x" style="color:rgb(95, 96, 173)"
-                        title="Link to archive of Irish monuments" pos="bottom" uk-tooltip></i>
-                </div>
-                <div class="uk-width-expand@m uk-text-left">
-                    <div class="uk-text-muted uk-text-center" style="font-size:xx-small">Monument Archive</div>
-                </div>
-
-            </a>
-        </div>
+      </a>
     </div>
+  </div>
 </div>

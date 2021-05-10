@@ -1,7 +1,4 @@
 import axios from "axios";
-import {Buffer} from "buffer";
-//import fs from 'fs';
-
 
 export class MonumentService {
   monumentList = [];
@@ -13,34 +10,41 @@ export class MonumentService {
 
   constructor(baseUrl) {
     this.baseUrl = baseUrl;
-     if (localStorage.user) {
-      axios.defaults.headers.common["Authorization"] = "Bearer " + JSON.parse(localStorage.user);
+    if (localStorage.user) {
+      axios.defaults.headers.common["Authorization"] =
+        "Bearer " + JSON.parse(localStorage.user);
     }
   }
 
   async addMonument(monument) {
     let requestForm = new FormData();
 
-     requestForm.append('title', String(monument.title));
-      requestForm.append('description', String(monument.description));
-      requestForm.append('latitude', String(monument.latitude));
-      requestForm.append('longitude', String(monument.longitude));
-      requestForm.append('county', String(monument.county));
-      requestForm.append('province', String(monument.province));
-    for (let i=0; i<monument.images.length; i++) {
-        requestForm.append("imageUpload", monument.images[i])
+    requestForm.append("title", String(monument.title));
+    requestForm.append("description", String(monument.description));
+    requestForm.append("latitude", String(monument.latitude));
+    requestForm.append("longitude", String(monument.longitude));
+    requestForm.append("county", String(monument.county));
+    requestForm.append("province", String(monument.province));
+    if (monument.images) {
+      for (let i = 0; i < monument.images.length; i++) {
+        requestForm.append("imageUpload", monument.images[i]);
+      }
+    } else {
+      requestForm.append("imageUpload", "");
     }
-   
-      const response = await axios.post(this.baseUrl + "/api/monuments", requestForm, //{
-        
-      );
 
-      this.newMonument = response.data;
-      return this.newMonument;
+    const response = await axios.post(
+      this.baseUrl + "/api/monuments",
+      requestForm
+    );
+
+    this.newMonument = response.data;
+    //return this.newMonument;
     if (response) {
-        return true;
+      return true;
+    } else {
+      return false;
     }
-    
   }
 
   async getMonuments() {
@@ -55,14 +59,16 @@ export class MonumentService {
   }
 
   async getNonProvinceCategories() {
-      try {
-const response = await axios.get(this.baseUrl + "/api/monuments/categories");
-console.log(response);
-this.categories = response.data;
-return this.categories;
-      } catch (error) {
-          return [];
-      }
+    try {
+      const response = await axios.get(
+        this.baseUrl + "/api/monuments/categories"
+      );
+      console.log(response);
+      this.categories = response.data;
+      return this.categories;
+    } catch (error) {
+      return [];
+    }
   }
 
   async getIndividualMonument(id) {
@@ -77,14 +83,15 @@ return this.categories;
   }
 
   async getMonumentWeather(id) {
- try {
-      const response = await axios.get(this.baseUrl + "/api/monuments/" + id + "/weather");
+    try {
+      const response = await axios.get(
+        this.baseUrl + "/api/monuments/" + id + "/weather"
+      );
 
-      this.weatherData= response.data;
+      this.weatherData = response.data;
       return this.weatherData;
     } catch (error) {
       return [];
     }
   }
-
 }

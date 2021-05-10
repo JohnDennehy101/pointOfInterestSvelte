@@ -1,21 +1,16 @@
 <script>
-    export let coordinates;
+  export let coordinates;
 </script>
 
 <table class="uk-table uk-table-small">
-    <tbody>
-        <tr>
-            <td>Latitude</td>
-            <td>{coordinates.latitude}</td>
-
-        </tr>
-        <tr>
-
-            <td>Longitude</td>
-            <td>{coordinates.longitude}</td>
-
-        </tr>
-
-    </tbody>
-
+  <tbody>
+    <tr>
+      <td>Latitude</td>
+      <td>{coordinates.latitude}</td>
+    </tr>
+    <tr>
+      <td>Longitude</td>
+      <td>{coordinates.longitude}</td>
+    </tr>
+  </tbody>
 </table>
