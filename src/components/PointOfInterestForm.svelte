@@ -2,6 +2,11 @@
   import { push } from "svelte-spa-router";
   import { getContext, onMount } from "svelte";
   const monumentService = getContext("MonumentService");
+  export let addMonumentAction;
+  export let existingMonumentRecord;
+
+  // let monument;
+  // let id;
 
   let countySelectField;
   let countyContainer;
@@ -13,12 +18,40 @@
   let latitude = "";
   let images;
   let categories;
+  let selectedCategories;
   let preview;
   let newCategoryTitle;
   let categoryDivContainer;
 
   onMount(async () => {
     categories = await monumentService.getNonProvinceCategories();
+
+    if (existingMonumentRecord) {
+      title = existingMonumentRecord.title;
+      description = existingMonumentRecord.description;
+      province = existingMonumentRecord.province;
+      county = existingMonumentRecord.county;
+      longitude = existingMonumentRecord.coordinates.longitude;
+      latitude = existingMonumentRecord.coordinates.latitude;
+
+      let selectedCategoryTitles = [];
+      //selectedCategories = existingMonumentRecord.categories;
+      //DUMMY FOR TEST
+      selectedCategories = [{ title: "Castle" }];
+      for (let category in selectedCategories) {
+        selectedCategoryTitles.push(selectedCategories[category]["title"]);
+      }
+
+      if (selectedCategoryTitles.length > 0) {
+        for (let category in categories) {
+          if (selectedCategoryTitles.includes(categories[category].title)) {
+            categories[category].checked = true;
+          }
+        }
+      }
+    }
+
+    console.log(categories);
   });
   const munsterCounties = [
     "Cork",
@@ -105,6 +138,16 @@
     county = e.target.value;
   };
 
+  function selectCurrentCategories(checkboxParentContainer, categoryList) {
+    console.log(checkboxParentContainer);
+    // let existingCheckboxes = document.getElementsByClassName('uk-checkbox')
+    // for (let individualCheckbox in existingCheckboxes) {
+    //     if (categoryList.includes(existingCheckboxes[individualCheckbox].value)) {
+    //         existingCheckboxes[individualCheckbox].checked = true
+    //     }
+    // }
+  }
+
   let addNewCategory = () => {
     console.log(newCategoryTitle);
     if (newCategoryTitle.length > 1) {
@@ -182,7 +225,7 @@
     }
   };
 
-  async function addMonument() {
+  let addMonumentFunction = async function addMonument() {
     let monument = {
       title: title,
       description: description,
@@ -201,6 +244,18 @@
     } else {
       console.log("failing on addition of monument");
     }
+  };
+
+  let editMonumentFunction = async function editMonument() {
+    console.log("EDITING");
+  };
+
+  let actionMonument;
+
+  if (addMonumentAction) {
+    actionMonument = addMonumentFunction;
+  } else {
+    actionMonument = editMonumentFunction;
   }
 </script>
 
@@ -208,7 +263,7 @@
   class="uk-margin uk-width-2xlarge uk-margin-auto uk-card uk-card-default uk-card-body uk-box-shadow-large"
 >
   <form
-    on:submit|preventDefault={addMonument}
+    on:submit|preventDefault={actionMonument}
     class="uk-form-stacked uk-text-left"
     enctype="multipart/form-data"
   >
@@ -321,6 +376,7 @@
             {#each categories as individualCategory}
               <div class="uk-width-expand@m">
                 <input
+                  checked={individualCategory.checked}
                   class="uk-checkbox"
                   name="category"
                   value={individualCategory.title}

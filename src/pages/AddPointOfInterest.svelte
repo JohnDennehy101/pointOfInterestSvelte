@@ -1,7 +1,7 @@
 <script>
   import { title, subTitle, navBar, loggedInUserBar } from "../stores";
   import { onMount, getContext, setContext } from "svelte";
-  import AddPointOfInterestForm from "../components/AddPointOfInterestForm.svelte";
+  import PointOfInterestForm from "../components/PointOfInterestForm.svelte";
 
   title.set("Point of Interest");
   subTitle.set("Add a new Point of Interest");
@@ -24,7 +24,10 @@
         alt="Sculpture of Plato"
       />
     </div>
-    <AddPointOfInterestForm />
+    <PointOfInterestForm
+      addMonumentAction={true}
+      existingMonumentRecord={undefined}
+    />
     <!-- <div class="uk-width-expand@m">{{> addPointOfInterest }}</div> -->
   </div>
 </div>

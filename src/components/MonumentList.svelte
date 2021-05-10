@@ -59,7 +59,8 @@
             </div>
             <div class="uk-width-1-3@m">
               <a
-                href="editMonumentView/{monument._id}"
+                href="/#/editMonumentView/{monument._id}"
+                on:click={() => setLocalStorageMonumentId(monument._id)}
                 class="editMonumentButton"
                 ><span
                   class="uk-margin-small-right uk-align-right"

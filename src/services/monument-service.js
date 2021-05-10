@@ -7,6 +7,7 @@ export class MonumentService {
   weatherData;
   newMonument;
   categories;
+  selectedCategories;
 
   constructor(baseUrl) {
     this.baseUrl = baseUrl;
@@ -90,6 +91,19 @@ export class MonumentService {
 
       this.weatherData = response.data;
       return this.weatherData;
+    } catch (error) {
+      return [];
+    }
+  }
+
+  async getCurrentMonumentCategories(id) {
+     try {
+      const response = await axios.get(
+        this.baseUrl + "/api/monuments/categories/" + id
+      );
+
+      this.selectedCategories = response.data;
+      return this.selectedCategories;
     } catch (error) {
       return [];
     }
