@@ -7,6 +7,7 @@
 
   // let monument;
   // let id;
+
   let categoryTitles = [];
   let checkedCategories = [];
   let countySelectField;
@@ -196,6 +197,22 @@
     return li;
   }
 
+  function editMonumentPreviewImages(readerResult) {
+    // removeImageDisplayElements();
+    let imagesList = document.getElementById("imagesList");
+    console.log(imagesList);
+    const li = document.createElement("li");
+    const canvas = document.createElement("canvas");
+    canvas.setAttribute("width", "600");
+    canvas.setAttribute("height", "900");
+    const img = document.createElement("img");
+    img.setAttribute("src", readerResult);
+    img.setAttribute("uk-img", "target: !.uk - slideshow - items");
+    li.appendChild(img);
+    li.appendChild(canvas);
+    imagesList.appendChild(li);
+  }
+
   let removePriorImagePreviewElements = (e) => {
     let imgPreviewElems = preview.children;
     Array.from(imgPreviewElems).forEach(function (element) {
@@ -203,9 +220,23 @@
     });
   };
 
+  let removeImageDisplayElements = () => {
+    let imagesList = document.getElementById("imagesList");
+    console.log("working to here");
+    // imagesList = document.getElementById("imagesList");
+    // console.log(imageInput.value)
+    console.log(imagesList);
+    while (imagesList.children.length > 0) {
+      let individualImage = imagesList.children[0];
+      individualImage.parentNode.removeChild(individualImage);
+    }
+  };
+
   let readImageFiles = async function (input) {
-    console.log(input);
-    console.log(input.target.files);
+    if (!addMonumentAction) {
+      removeImageDisplayElements();
+    }
+
     images = input.target.files;
     let allFiles = input.target.files;
     if (allFiles.length < 2 && allFiles.length > 0) {
@@ -215,6 +246,10 @@
       if (preview.childNodes.length < 1) {
         reader.onload = function () {
           let imageResult = imgPreviewLi(reader.result, fileName);
+          if (!addMonumentAction) {
+            editMonumentPreviewImages(reader.result);
+          }
+
           preview.append(imageResult);
         };
         reader.readAsDataURL(file);
@@ -224,12 +259,18 @@
       }
     } else if (allFiles.length >= 2) {
       let file = "";
+
       for (let i = 0; i < allFiles.length; i++) {
         let file = await allFiles[i];
         let fileName = allFiles[i].name;
         let reader = new FileReader();
         reader.onload = function () {
           let imageResult = imgPreviewLi(reader.result, fileName);
+
+          if (!addMonumentAction) {
+            editMonumentPreviewImages(reader.result);
+          }
+
           preview.append(imageResult);
         };
         reader.readAsDataURL(file);
