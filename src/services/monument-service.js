@@ -26,6 +26,13 @@ export class MonumentService {
     requestForm.append("longitude", String(monument.longitude));
     requestForm.append("county", String(monument.county));
     requestForm.append("province", String(monument.province));
+
+    if (monument.category.length) {
+      for (let category in monument.category) {
+        requestForm.append("category", monument.category[category]);
+      }
+    }
+    
     if (monument.images) {
       for (let i = 0; i < monument.images.length; i++) {
         requestForm.append("imageUpload", monument.images[i]);

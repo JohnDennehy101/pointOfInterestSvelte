@@ -7,7 +7,8 @@
 
   // let monument;
   // let id;
-
+  let categoryTitles = [];
+  let checkedCategories = [];
   let countySelectField;
   let countyContainer;
   let title = "";
@@ -26,6 +27,10 @@
   onMount(async () => {
     categories = await monumentService.getNonProvinceCategories();
 
+    categories.forEach((category) => {
+      categoryTitles.push(category.title);
+    });
+
     if (existingMonumentRecord) {
       title = existingMonumentRecord.title;
       description = existingMonumentRecord.description;
@@ -34,10 +39,19 @@
       longitude = existingMonumentRecord.coordinates.longitude;
       latitude = existingMonumentRecord.coordinates.latitude;
 
+      let dummyEventObject = {
+        target: {
+          value: province,
+        },
+      };
+      populateCountyField(dummyEventObject);
+
+      countySelectField.value = existingMonumentRecord.county;
+
       let selectedCategoryTitles = [];
-      //selectedCategories = existingMonumentRecord.categories;
+      selectedCategories = existingMonumentRecord.categories;
       //DUMMY FOR TEST
-      selectedCategories = [{ title: "Castle" }];
+      // selectedCategories = [{ title: "Castle" }];
       for (let category in selectedCategories) {
         selectedCategoryTitles.push(selectedCategories[category]["title"]);
       }
@@ -50,8 +64,6 @@
         }
       }
     }
-
-    console.log(categories);
   });
   const munsterCounties = [
     "Cork",
@@ -138,25 +150,28 @@
     county = e.target.value;
   };
 
-  function selectCurrentCategories(checkboxParentContainer, categoryList) {
-    console.log(checkboxParentContainer);
-    // let existingCheckboxes = document.getElementsByClassName('uk-checkbox')
-    // for (let individualCheckbox in existingCheckboxes) {
-    //     if (categoryList.includes(existingCheckboxes[individualCheckbox].value)) {
-    //         existingCheckboxes[individualCheckbox].checked = true
-    //     }
-    // }
-  }
+  let manipulateCheckedCategoryTitles = (e) => {
+    if (e.target.checked) {
+      checkedCategories.push(e.target.value);
+    } else if (!e.target.checked) {
+      checkedCategories.splice(checkedCategories.indexOf(e.target.value), 1);
+    }
+  };
 
   let addNewCategory = () => {
-    console.log(newCategoryTitle);
-    if (newCategoryTitle.length > 1) {
+    if (
+      newCategoryTitle.length > 1 &&
+      !categoryTitles.includes(newCategoryTitle)
+    ) {
       let checkboxParentDiv = document.createElement("div");
       checkboxParentDiv.classList.add("uk-width-expand@m");
       let checkboxLabel = document.createElement("label");
-      checkboxLabel.innerHTML = `<input class="uk-checkbox" name="category" value=${newCategoryTitle} type="checkbox"> ${newCategoryTitle}`;
+      checkboxLabel.innerHTML = `<input class="uk-checkbox" bind:group=${checkedCategories} name="category" value=${newCategoryTitle} type="checkbox"> ${newCategoryTitle}`;
+      checkboxLabel.addEventListener("click", manipulateCheckedCategoryTitles);
       checkboxParentDiv.appendChild(checkboxLabel);
       categoryDivContainer.appendChild(checkboxParentDiv);
+      categoryTitles.push(newCategoryTitle);
+
       newCategoryTitle = "";
     }
   };
@@ -231,6 +246,7 @@
       description: description,
       province: province,
       county: county,
+      category: checkedCategories,
       longitude: longitude,
       latitude: latitude,
       images: images,
@@ -262,6 +278,9 @@
 <div
   class="uk-margin uk-width-2xlarge uk-margin-auto uk-card uk-card-default uk-card-body uk-box-shadow-large"
 >
+  {#if !addMonumentAction}
+    <h3 class="uk-card-title uk-text-center">Edit Monument</h3>
+  {/if}
   <form
     on:submit|preventDefault={actionMonument}
     class="uk-form-stacked uk-text-left"
@@ -380,6 +399,7 @@
                   class="uk-checkbox"
                   name="category"
                   value={individualCategory.title}
+                  on:click={manipulateCheckedCategoryTitles}
                   type="checkbox"
                 />
                 {individualCategory.title}
@@ -387,6 +407,20 @@
             {/each}
           </div>
         {/if}
+
+        <!-- {#each categoryTitles as individualCategory}
+              <div class="uk-width-expand@m">
+                <input
+                  class="uk-checkbox"
+                  name="category"
+                  on:click={manipulateCheckedCategoryTitles}
+                  value={individualCategory}
+                />
+                {individualCategory}
+              </div>
+            {/each}
+          </div>
+        {/if} -->
 
         <div class="uk-margin">
           <div class="uk-form-label">New Category</div>
