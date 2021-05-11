@@ -6,6 +6,7 @@ export class MonumentService {
   baseUrl = "";
   weatherData;
   newMonument;
+  editedMonument;
   categories;
   selectedCategories;
 
@@ -53,6 +54,48 @@ export class MonumentService {
     } else {
       return false;
     }
+  }
+
+  //Similar to above - could be refactored
+  async editMonument(monument) {
+
+    let requestForm = new FormData();
+
+    requestForm.append("title", String(monument.title));
+    requestForm.append("description", String(monument.description));
+    requestForm.append("latitude", String(monument.latitude));
+    requestForm.append("longitude", String(monument.longitude));
+    requestForm.append("county", String(monument.county));
+    requestForm.append("province", String(monument.province));
+
+    if (monument.category.length) {
+      for (let category in monument.category) {
+        requestForm.append("category", monument.category[category]);
+      }
+    }
+    
+    if (monument.images) {
+      for (let i = 0; i < monument.images.length; i++) {
+        requestForm.append("imageUpload", monument.images[i]);
+      }
+    } else {
+      requestForm.append("imageUpload", "");
+    }
+
+    console.log(requestForm);
+    const response = await axios.put(
+      this.baseUrl + "/api/monuments/" + monument._id,
+      requestForm
+    );
+
+    this.editedMonument = response.data;
+    //return this.newMonument;
+    if (response) {
+      return true;
+    } else {
+      return false;
+    }
+
   }
 
   async getMonuments() {

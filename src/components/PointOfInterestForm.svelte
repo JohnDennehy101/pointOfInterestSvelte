@@ -6,7 +6,7 @@
   export let existingMonumentRecord;
 
   // let monument;
-  // let id;
+  let id;
 
   let categoryTitles = [];
   let checkedCategories = [];
@@ -37,8 +37,11 @@
       description = existingMonumentRecord.description;
       province = existingMonumentRecord.province;
       county = existingMonumentRecord.county;
+      console.log(county);
+      console.log("County on mount");
       longitude = existingMonumentRecord.coordinates.longitude;
       latitude = existingMonumentRecord.coordinates.latitude;
+      id = existingMonumentRecord._id;
 
       let dummyEventObject = {
         target: {
@@ -304,7 +307,26 @@
   };
 
   let editMonumentFunction = async function editMonument() {
-    console.log("EDITING");
+    let monument = {
+      title: title,
+      description: description,
+      province: province,
+      county: county,
+      category: checkedCategories,
+      longitude: longitude,
+      latitude: latitude,
+      images: images,
+      _id: id,
+    };
+
+    console.log(monument);
+    let success = await monumentService.editMonument(monument);
+    console.log(success);
+    if (success) {
+      push("/report");
+    } else {
+      console.log("failing on edit of monument");
+    }
   };
 
   let actionMonument;
