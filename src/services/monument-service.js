@@ -9,6 +9,7 @@ export class MonumentService {
   editedMonument;
   categories;
   selectedCategories;
+  successfullyDeletedMonument;
 
   constructor(baseUrl) {
     this.baseUrl = baseUrl;
@@ -104,6 +105,19 @@ export class MonumentService {
 
       this.monumentList = response.data;
       return this.monumentList;
+    } catch (error) {
+      return [];
+    }
+  }
+
+  async deleteMonument(id) {
+    try {
+      const formattedId = id.replace(/"/g, '');
+      console.log(formattedId);
+      const response = await axios.delete(this.baseUrl + "/api/monuments/" + formattedId);
+
+      this.successfullyDeletedMonument = response.data;
+      return this.successfullyDeletedMonument;
     } catch (error) {
       return [];
     }

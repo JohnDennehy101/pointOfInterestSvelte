@@ -1,16 +1,41 @@
 <script>
   import { onMount, getContext } from "svelte";
   import { MonumentService } from "../services/monument-service";
+  import { push } from "svelte-spa-router";
 
   const monumentService = getContext("MonumentService");
 
   let monumentList = [];
   onMount(async () => {
     monumentList = await monumentService.getMonuments();
+    console.log(monumentList);
   });
 
   let setLocalStorageMonumentId = (id) => {
     localStorage.monument = JSON.stringify(id);
+  };
+
+  let deleteMonument = () => {
+    let success = monumentService.deleteMonument(localStorage.monument);
+    if (success) {
+      document.getElementById("delete-monument-modal").style.display = "none";
+      monumentList.splice(
+        monumentList.findIndex(
+          (x) =>
+            (x._id = localStorage.monument.substring(
+              1,
+              localStorage.monument.length - 1
+            ))
+        ),
+        1
+      );
+      localStorage.monument = null;
+      location.reload();
+      push("/report");
+    } else {
+      console.log("failing on deletion of monument");
+    }
+    //console.log(localStorage.monument);
   };
 </script>
 
@@ -43,10 +68,12 @@
                 uk-toggle
                 class="deleteMonumentButton"
                 style="width: 10px"
-                ><span
+              >
+                <span
                   class="uk-margin-small-right uk-align-left"
+                  on:click={() => setLocalStorageMonumentId(monument._id)}
                   uk-icon="trash"
-                  style="color: red"
+                  style="color: red; cursor:pointer;"
                 />
               </a>
             </div>
@@ -74,4 +101,26 @@
       </div>
     </div>
   {/each}
+
+  <!-- This is the modal -->
+
+  <div id="delete-monument-modal" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body">
+      <h2 class="uk-modal-title">Delete Monument</h2>
+      <p id="deleteWarningMessage" />
+      <p class="uk-text-right">
+        <button class="uk-button uk-button-default uk-modal-close" type="button"
+          >Cancel</button
+        >
+
+        <button
+          on:click={deleteMonument}
+          class="uk-button uk-button-danger"
+          type="submit"
+          id="deleteButton"
+          formmethod="post">Delete</button
+        >
+      </p>
+    </div>
+  </div>
 </div>
