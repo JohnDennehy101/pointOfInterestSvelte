@@ -51,6 +51,7 @@
       populateCountyField(dummyEventObject);
 
       countySelectField.value = existingMonumentRecord.county;
+      county = existingMonumentRecord.county;
 
       let selectedCategoryTitles = [];
       selectedCategories = existingMonumentRecord.categories;
@@ -60,9 +61,12 @@
         selectedCategoryTitles.push(selectedCategories[category]["title"]);
       }
 
+      console.log(selectedCategoryTitles);
+
       if (selectedCategoryTitles.length > 0) {
         for (let category in categories) {
           if (selectedCategoryTitles.includes(categories[category].title)) {
+            checkedCategories.push(categories[category].title);
             categories[category].checked = true;
           }
         }
@@ -114,6 +118,7 @@
     for (county in provinceCountyArray) {
       let countyOption = document.createElement("option");
       countyOption.textContent = provinceCountyArray[county];
+      countyOption.value = provinceCountyArray[county];
       countySelectField.appendChild(countyOption);
     }
   }
@@ -148,6 +153,8 @@
     } else if (e.target.value === "Ulster") {
       createCountyOptions(ulsterCounties);
     }
+
+    county = undefined;
   };
 
   let changeCountyValue = (e) => {
@@ -225,10 +232,6 @@
 
   let removeImageDisplayElements = () => {
     let imagesList = document.getElementById("imagesList");
-    console.log("working to here");
-    // imagesList = document.getElementById("imagesList");
-    // console.log(imageInput.value)
-    console.log(imagesList);
     while (imagesList.children.length > 0) {
       let individualImage = imagesList.children[0];
       individualImage.parentNode.removeChild(individualImage);
@@ -319,7 +322,6 @@
       _id: id,
     };
 
-    console.log(monument);
     let success = await monumentService.editMonument(monument);
     console.log(success);
     if (success) {
