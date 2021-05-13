@@ -13,6 +13,7 @@
   import ViewPointOfInterest from "./pages/ViewPointOfInterest.svelte";
   import AddPointOfInterest from "./pages/AddPointOfInterest.svelte";
   import EditPointOfInterest from "./pages/editPointOfInterest.svelte";
+  import UserSettings from "./pages/UserSettings.svelte";
 
   setContext("UserService", new UserService("http://jd-2.local:4000"));
   setContext("MonumentService", new MonumentService("http://jd-2.local:4000"));
@@ -28,6 +29,7 @@
     "/addMonument": AddPointOfInterest,
     "/viewMonument/:id": ViewPointOfInterest,
     "/editMonumentView/:id": EditPointOfInterest,
+    "/settings": UserSettings,
   };
 </script>
 

@@ -1,6 +1,6 @@
 <script>
   import { title, subTitle, navBar, welcomeBar } from "../stores";
-  import SignupForm from "../components/SignupForm.svelte";
+  import UserAccountForm from "../components/UserAccountForm.svelte";
   import signupScreenImage from "/src/assets/castle.jpg";
   title.set("Point of Interest Application");
   subTitle.set("Please Sign Up");
@@ -21,7 +21,7 @@
     <div>
       <div class="uk-card uk-card-default uk-card-body uk-box-shadow-large">
         <h3 class="uk-card-title uk-text-center">Please enter details below</h3>
-        <SignupForm />
+        <UserAccountForm signUpAction={true} />
       </div>
     </div>
   </div>

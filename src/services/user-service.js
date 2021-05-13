@@ -3,6 +3,8 @@ import { user } from "../stores";
 export class UserService {
   userList = [];
   baseUrl = "";
+  editedUser;
+  existingUser;
 
   constructor(baseUrl) {
     this.baseUrl = baseUrl;
@@ -22,11 +24,31 @@ export class UserService {
     }
   }
 
+  async getIndividualUser(id) {
+    try {
+ const response = await axios.get(this.baseUrl + "/api/users/" + id);
+ this.existingUser = response.data;
+ return this.existingUser;
+    } catch (error) {
+
+    }
+  }
+
   async signUp(newUser) {
     try {
       const response = await axios.post(`${this.baseUrl}/api/users`, newUser);
       const success = await this.login(newUser.email, newUser.password);
       return success;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  async editUser(editedUser) {
+    try {
+      const response = await axios.put(`${this.baseUrl}/api/users/${editedUser._id}`, editedUser);
+      this.editedUser = response.data;
+      return this.editedUser;
     } catch (error) {
       return false;
     }

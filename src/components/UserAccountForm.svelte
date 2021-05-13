@@ -1,7 +1,9 @@
 <script>
   import { push } from "svelte-spa-router";
-  import { getContext } from "svelte";
+  import { getContext, onMount } from "svelte";
   const userService = getContext("UserService");
+
+  export let signUpAction;
 
   let firstName = "";
   let lastName = "";
@@ -10,8 +12,30 @@
   let userType = "";
   const numberOfRecords = 0;
   let errorMessage = "";
+  let userJsonWebToken;
+  let userId;
+  let callToActionButtonTitle;
 
-  async function signUp() {
+  onMount(async function () {
+    if (!signUpAction) {
+      callToActionButtonTitle = "Edit User";
+      userJsonWebToken = JSON.parse(localStorage.user);
+      let success = await userService.getIndividualUser(userJsonWebToken);
+      console.log(success);
+      if (success) {
+        firstName = success.firstName;
+        lastName = success.lastName;
+        email = success.email;
+        password = success.password;
+        userType = success.userType;
+        userId = success._id;
+      }
+    } else if (signUpAction) {
+      callToActionButtonTitle = "Sign Up";
+    }
+  });
+
+  const addUserFunction = async function signUp() {
     let newUser = {
       firstName: firstName,
       lastName: lastName,
@@ -30,10 +54,39 @@
       password = "";
       errorMessage = "Error Creating New Account";
     }
+  };
+
+  const editUserFunction = async function editUser() {
+    let editedUser = {
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      password: password,
+      userType: userType,
+      numberOfRecords: numberOfRecords,
+      _id: userId,
+    };
+
+    let success = await userService.editUser(editedUser);
+    if (success) {
+      push("/report");
+    } else {
+      email = "";
+      password = "";
+      errorMessage = "Error Editing Account";
+    }
+  };
+
+  let actionUser;
+
+  if (signUpAction) {
+    actionUser = addUserFunction;
+  } else {
+    actionUser = editUserFunction;
   }
 </script>
 
-<form on:submit|preventDefault={signUp}>
+<form on:submit|preventDefault={actionUser}>
   <div class="uk-margin">
     <div class="uk-inline uk-width-1-1">
       <span class="uk-form-icon" uk-icon="icon: user" />
@@ -94,7 +147,7 @@
 
   <div class="uk-margin">
     <button class="uk-button uk-button-primary uk-button-large uk-width-1-1"
-      >Sign up</button
+      >{callToActionButtonTitle}</button
     >
   </div>
 
