@@ -35,9 +35,13 @@ export class UserService {
   }
 
   async signUp(newUser) {
+    let success;
     try {
       const response = await axios.post(`${this.baseUrl}/api/users`, newUser);
-      const success = await this.login(newUser.email, newUser.password);
+      if (response) {
+success = await this.login(newUser.email, newUser.password);
+      }
+      
       return success;
     } catch (error) {
       return false;
