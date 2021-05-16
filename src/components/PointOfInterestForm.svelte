@@ -297,6 +297,8 @@
 
   let addMonumentFunction = async function addMonument() {
     let monument;
+    let success;
+
     monument = {
       title: title,
       description: description,
@@ -307,8 +309,12 @@
       latitude: latitude,
       images: images,
     };
+    try {
+      success = await monumentService.addMonument(monument);
+    } catch (Error) {
+      error = "Error adding new monument record. Please try again.";
+    }
 
-    let success = await monumentService.addMonument(monument);
     console.log(success);
     if (success) {
       push("/report");
