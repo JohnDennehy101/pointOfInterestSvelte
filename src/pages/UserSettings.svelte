@@ -1,7 +1,7 @@
 <script>
   import { title, subTitle, navBar, loggedInUserBar } from "../stores";
-  import MonumentList from "../components/MonumentList.svelte";
   import UserAccountForm from "../components/UserAccountForm.svelte";
+  import DeleteAccountModal from "../components/DeleteAccountModal.svelte";
   title.set("Settings");
   subTitle.set("Edit Account Details");
 
@@ -30,8 +30,9 @@
         <!-- {{> settings-form}}
                 {{> error}} -->
 
-        <UserAccountForm />
+        <UserAccountForm signUpAction={false} />
       </div>
     </div>
   </div>
+  <DeleteAccountModal />
 </div>

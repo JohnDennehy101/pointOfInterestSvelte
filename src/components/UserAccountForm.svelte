@@ -157,3 +157,15 @@
     </div>
   {/if}
 </form>
+
+{#if !signUpAction}
+  <div class="uk-margin uk-align-left">
+    <button
+      type="button"
+      id="deleteAccountButton"
+      class="uk-button uk-button-danger"
+      href="#delete-account-modal"
+      uk-toggle>DELETE ACCOUNT</button
+    >
+  </div>
+{/if}

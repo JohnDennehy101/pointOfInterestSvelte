@@ -84,4 +84,15 @@ export class UserService {
     localStorage.user = null;
     localStorage.monument = null;
   }
+
+  async deleteUser(jwt) {
+try {
+      const response = await axios.delete(`${this.baseUrl}/api/users/${jwt}`);
+      if (response) {
+        return true;
+      }
+    } catch (error) {
+      return false;
+    }
+  }
 }
