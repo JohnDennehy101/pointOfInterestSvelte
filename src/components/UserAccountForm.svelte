@@ -15,6 +15,8 @@
   let userJsonWebToken;
   let userId;
   let callToActionButtonTitle;
+  let inputFieldStyle = "uk-input uk-form-large";
+  let selectFieldStyle = "uk-select uk-form-large";
 
   onMount(async function () {
     if (!signUpAction) {
@@ -36,20 +38,34 @@
   });
 
   const addUserFunction = async function signUp() {
-    let newUser = {
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      password: password,
-      userType: userType,
-      numberOfRecords: numberOfRecords,
-    };
+    let newUser, success;
+    if (
+      firstName.length > 0 &&
+      lastName.length > 0 &&
+      email.length > 5 &&
+      password.length > 5 &&
+      userType.length > 3
+    ) {
+      newUser = {
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        password: password,
+        userType: userType,
+        numberOfRecords: numberOfRecords,
+      };
+    }
+
     console.log(newUser);
-    let success = await userService.signUp(newUser);
-    console.log(success);
+
+    if (newUser) {
+      success = await userService.signUp(newUser);
+    }
     if (success) {
       push("/report");
     } else {
+      inputFieldStyle = "uk-input uk-form-large uk-form-danger";
+      selectFieldStyle = "uk-select uk-form-large uk-form-danger";
       email = "";
       password = "";
       errorMessage = "Error Creating New Account";
@@ -71,6 +87,8 @@
     if (success) {
       push("/report");
     } else {
+      inputFieldStyle = "uk-input uk-form-large uk-form-danger";
+      selectFieldStyle = "uk-select uk-form-large uk-form-danger";
       email = "";
       password = "";
       errorMessage = "Error Editing Account";
@@ -92,8 +110,9 @@
       <span class="uk-form-icon" uk-icon="icon: user" />
       <input
         bind:value={firstName}
-        class="uk-input uk-form-large"
+        class={inputFieldStyle}
         type="text"
+        minlength={1}
         name="firstName"
       />
     </div>
@@ -103,7 +122,8 @@
       <span class="uk-form-icon" uk-icon="icon: user" />
       <input
         bind:value={lastName}
-        class="uk-input uk-form-large"
+        class={inputFieldStyle}
+        minlength={1}
         type="text"
         name="lastName"
       />
@@ -114,8 +134,9 @@
       <span class="uk-form-icon" uk-icon="icon: mail" />
       <input
         bind:value={email}
-        class="uk-input uk-form-large"
-        type="text"
+        class={inputFieldStyle}
+        type="email"
+        minlength={5}
         name="email"
       />
     </div>
@@ -125,7 +146,8 @@
       <span class="uk-form-icon" uk-icon="icon: lock" />
       <input
         bind:value={password}
-        class="uk-input uk-form-large"
+        class={inputFieldStyle}
+        minlength={5}
         type="password"
         name="password"
       />
@@ -133,11 +155,7 @@
   </div>
   <div class="uk-margin">
     <div class="uk-inline uk-width-1-1">
-      <select
-        bind:value={userType}
-        class="uk-select uk-form-large"
-        name="userType"
-      >
+      <select bind:value={userType} class={selectFieldStyle} name="userType">
         <option value="" disabled selected>Select User Type</option>
         <option value="User">User</option>
         <option value="Admin">Admin</option>

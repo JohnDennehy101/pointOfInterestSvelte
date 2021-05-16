@@ -6,9 +6,18 @@
   let email = "";
   let password = "";
   let errorMessage = "";
+  let inputFieldStyle = "uk-input uk-form-large";
 
   async function login() {
-    let success = await userService.login(email, password);
+    let success;
+
+    if (email.length < 5 || password.length < 5) {
+      inputFieldStyle = "uk-input uk-form-large uk-form-danger";
+    } else {
+      inputFieldStyle = "uk-input uk-form-large";
+      success = await userService.login(email, password);
+    }
+
     if (success) {
       push("/report");
     } else {
@@ -26,8 +35,9 @@
       <span class="uk-form-icon" uk-icon="icon: mail" />
       <input
         bind:value={email}
-        class="uk-input uk-form-large"
-        type="text"
+        minlength={5}
+        class={inputFieldStyle}
+        type="email"
         name="email"
       />
     </div>
@@ -37,9 +47,10 @@
       <span class="uk-form-icon" uk-icon="icon: lock" />
       <input
         bind:value={password}
-        class="uk-input uk-form-large"
+        class={inputFieldStyle}
         type="password"
         name="password"
+        minlength={2}
       />
     </div>
   </div>
