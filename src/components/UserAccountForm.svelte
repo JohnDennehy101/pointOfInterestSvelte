@@ -89,8 +89,6 @@
     } else {
       inputFieldStyle = "uk-input uk-form-large uk-form-danger";
       selectFieldStyle = "uk-select uk-form-large uk-form-danger";
-      email = "";
-      password = "";
       errorMessage = "Error Editing Account";
     }
   };

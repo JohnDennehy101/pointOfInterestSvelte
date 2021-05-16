@@ -7,7 +7,7 @@
 
   // let monument;
   let id;
-
+  let error;
   let categoryTitles = [];
   let checkedCategories = [];
   let countySelectField;
@@ -287,8 +287,17 @@
     }
   };
 
+  let fieldStyling = (e) => {
+    if (e.target.value.length < 1) {
+      e.target.classList.add("uk-form-danger");
+    } else {
+      e.target.classList.remove("uk-form-danger");
+    }
+  };
+
   let addMonumentFunction = async function addMonument() {
-    let monument = {
+    let monument;
+    monument = {
       title: title,
       description: description,
       province: province,
@@ -299,13 +308,12 @@
       images: images,
     };
 
-    console.log(monument);
     let success = await monumentService.addMonument(monument);
     console.log(success);
     if (success) {
       push("/report");
     } else {
-      console.log("failing on addition of monument");
+      error = "Error adding new monument record. Please try again.";
     }
   };
 
@@ -327,7 +335,7 @@
     if (success) {
       push("/report");
     } else {
-      console.log("failing on edit of monument");
+      error = "Error adding new monument record. Please try again.";
     }
   };
 
@@ -362,9 +370,11 @@
               bind:value={title}
               class="uk-input"
               id="form-stacked-text"
+              on:change={fieldStyling}
               type="text"
               name="title"
               placeholder="Enter Monument Title"
+              required
             />
           </div>
         </div>
@@ -373,11 +383,13 @@
           <div class="uk-form-controls">
             <textarea
               bind:value={description}
+              on:change={fieldStyling}
               class="uk-textarea"
               id="form-stacked-text"
               type="text"
               name="description"
               placeholder="Enter Monument Description"
+              required
             />
           </div>
         </div>
@@ -411,6 +423,7 @@
             class="uk-select"
             name="county"
             id="countySelectField"
+            required
           >
             <option value="" disabled selected>Select County</option>
           </select>
@@ -423,12 +436,14 @@
             <div class="uk-form-controls">
               <input
                 bind:value={latitude}
+                on:change={fieldStyling}
                 class="uk-input"
                 id="form-stacked-text"
                 type="number"
                 step=".0001"
                 name="latitude"
                 placeholder="Enter Monument Latitude"
+                required
               />
             </div>
           </div>
@@ -439,12 +454,14 @@
             <div class="uk-form-controls">
               <input
                 bind:value={longitude}
+                on:change={fieldStyling}
                 class="uk-input"
                 id="form-stacked-text"
                 type="number"
                 step=".0001"
                 name="longitude"
                 placeholder="Enter Monument Longitude"
+                required
               />
             </div>
           </div>
@@ -472,20 +489,6 @@
             {/each}
           </div>
         {/if}
-
-        <!-- {#each categoryTitles as individualCategory}
-              <div class="uk-width-expand@m">
-                <input
-                  class="uk-checkbox"
-                  name="category"
-                  on:click={manipulateCheckedCategoryTitles}
-                  value={individualCategory}
-                />
-                {individualCategory}
-              </div>
-            {/each}
-          </div>
-        {/if} -->
 
         <div class="uk-margin">
           <div class="uk-form-label">New Category</div>
@@ -547,5 +550,13 @@
         </div>
       </div>
     </div>
+    {#if error}
+      <div class="uk-margin uk-text-left uk-alert">
+        <div class="uk-text">There was a problem...</div>
+        <ul class="uk-list uk-list-disc">
+          <li>{error}</li>
+        </ul>
+      </div>
+    {/if}
   </form>
 </div>
