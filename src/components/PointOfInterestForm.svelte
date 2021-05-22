@@ -449,7 +449,7 @@
                 class="uk-input"
                 id="form-stacked-text"
                 type="number"
-                step=".0001"
+                step=".000000000000001"
                 name="latitude"
                 placeholder="Enter Monument Latitude"
                 required
@@ -467,7 +467,7 @@
                 class="uk-input"
                 id="form-stacked-text"
                 type="number"
-                step=".0001"
+                step=".0000000000000001"
                 name="longitude"
                 placeholder="Enter Monument Longitude"
                 required

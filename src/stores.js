@@ -29,6 +29,12 @@ export const loggedInUserBar = [
     link: "/#/report",
   },
    {
+    title: "Map",
+    icon: "fas fa-map-marked-alt fa-3x",
+    colour: "rgb(102, 153, 255)",
+    link: "/#/map",
+  },
+   {
     title: "User Settings",
     icon: "fas fa-sliders-h fa-3x",
     colour: "",
