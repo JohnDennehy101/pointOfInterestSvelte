@@ -324,6 +324,9 @@
   };
 
   let editMonumentFunction = async function editMonument() {
+    if (checkedCategories.length === 0) {
+      checkedCategories = [];
+    }
     let monument = {
       title: title,
       description: description,

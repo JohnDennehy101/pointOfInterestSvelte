@@ -28,7 +28,7 @@
         firstName = success.firstName;
         lastName = success.lastName;
         email = success.email;
-        password = success.password;
+        // password = success.password;
         userType = success.userType;
         userId = success._id;
       }
