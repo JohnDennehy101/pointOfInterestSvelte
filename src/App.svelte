@@ -17,8 +17,11 @@
   import Map from "./pages/Map.svelte";
   import AdminView from "./pages/AdminView.svelte";
 
-  setContext("UserService", new UserService("http://jd-2.local:4000"));
-  setContext("MonumentService", new MonumentService("http://jd-2.local:4000"));
+  setContext("UserService", new UserService("http://34.252.154.124:4000/"));
+  setContext(
+    "MonumentService",
+    new MonumentService("http://34.252.154.124:4000/")
+  );
 
   import { navBar, subTitle, title } from "./stores";
 
