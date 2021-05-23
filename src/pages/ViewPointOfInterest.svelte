@@ -18,6 +18,7 @@
   import WeatherOverviewTable from "../components/WeatherOverviewTable.svelte";
   import WeatherForecastTable from "../components/WeatherForecastTable.svelte";
   import NoWeatherDataComponent from "../components/NoWeatherDataComponent.svelte";
+  import OffCanvasNav from "../components/OffCanvasNav.svelte";
 
   import MonumentList from "../components/MonumentList.svelte";
   title.set("Monuments");
@@ -56,6 +57,7 @@
   });
 </script>
 
+<OffCanvasNav />
 {#if monument}
   <h1 class="uk-heading-medium uk-text-center">{monument.title}</h1>
 
