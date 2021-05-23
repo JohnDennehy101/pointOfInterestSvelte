@@ -9,7 +9,7 @@
 </div>
 
 <div
-  class="uk-width-2-3@m uk-card uk-card-default uk-padding-small uk-visible@m uk-first-column"
+  class="uk-width-1-3@m uk-card uk-card-default uk-padding-small uk-visible@m uk-first-column"
 >
   <div class="uk-grid">
     <div class="uk-width-1-6@m">
