@@ -17,10 +17,13 @@
   import Map from "./pages/Map.svelte";
   import AdminView from "./pages/AdminView.svelte";
 
-  setContext("UserService", new UserService("http://34.252.154.124:4000/"));
+  setContext(
+    "UserService",
+    new UserService("https://point-of-interest-api.herokuapp.com")
+  );
   setContext(
     "MonumentService",
-    new MonumentService("http://34.252.154.124:4000/")
+    new MonumentService("https://point-of-interest-api.herokuapp.com")
   );
 
   import { navBar, subTitle, title } from "./stores";
