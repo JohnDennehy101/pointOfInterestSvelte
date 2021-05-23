@@ -10,20 +10,20 @@
         currentWeatherDescription == "Rain" ||
         currentWeatherDescription == "Mist"
       ) {
-        weatherIcon = "/src/assets/rain.png";
+        weatherIcon = "/rain.png";
       } else if (currentWeatherDescription == "Snow") {
-        weatherIcon = "/src/assets/snowflake.png";
+        weatherIcon = "/snowflake.png";
       } else if (
         currentWeatherDescription == "Clouds" ||
         currentWeatherDescription == "Fog"
       ) {
-        weatherIcon = "/src/assets/cloud.png";
+        weatherIcon = "/cloud.png";
       } else if (currentWeatherDescription == "Thunderstorm") {
-        weatherIcon = "/src/assets/umbrella.png";
+        weatherIcon = "/umbrella.png";
       } else if (currentWeatherDescription == "Clear") {
-        weatherIcon = "/src/assets/sun.png";
+        weatherIcon = "/sun.png";
       } else {
-        weatherIcon = "/src/assets/sun.png";
+        weatherIcon = "/sun.png";
       }
     }
   });
