@@ -44,7 +44,7 @@
     <div class="uk-width-auto@m">
       <img
         width="500"
-        src="/src/assets/settingsImage.jpg"
+        src="/settingsImage.jpg"
         alt="Religious Sculpture on front of church"
       />
     </div>

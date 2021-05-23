@@ -100,8 +100,11 @@ export class LeafletMap {
 
   addMarker(location: Location, popupText = '', layerTitle = 'default') {
     let group: LayerGroup;
-    
-    let marker = L.marker([location.lat, location.lng]);
+    var defaultIcon = L.icon({
+        iconUrl: '/images/marker-icon.png',
+        shadowUrl: '/images/marker-icon.png',
+    });
+    let marker = L.marker([location.lat, location.lng], defaultIcon);
     if (popupText) {
       var popup = L.popup({ autoClose: false, closeOnClick: false });
       popup.setContent(popupText);
