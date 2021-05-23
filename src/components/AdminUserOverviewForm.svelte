@@ -19,7 +19,7 @@
         >
         <!-- // <td class="uk-text-center" style="width: 33.33%">{numberOfRecords}</td> -->
         <td class="uk-text-center" style="width: 33.33%">{user.lastLogin}</td>
-        <td>
+        <!-- <td>
           <p style="display: none">{user._id}</p>
           <a
             href="#delete-account-modal"
@@ -29,7 +29,7 @@
           >
             <i class="fas fa-trash-alt" style="color: red" />
           </a>
-        </td>
+        </td> -->
       </tr>
     {/each}
   </tbody>
