@@ -15,10 +15,12 @@
     const mapConfig = {
       location: { lat: lat, lng: lng },
       zoom: 7,
-      minZoom: 7,
+      minZoom: 1,
     };
     map = new LeafletMap("donation-map", mapConfig, "Terrain");
     map.showZoomControl();
+    map.addLayerGroup("National Monuments");
+    map.showLayerControl();
 
     monumentList = await monumentService.getMonuments();
     console.log(monumentList);
@@ -47,7 +49,8 @@
             lat: monumentList[monument].coordinates.latitude,
             lng: monumentList[monument].coordinates.longitude,
           },
-          monumentList[monument].title
+          monumentList[monument].title,
+          "National Monuments"
         );
       }
 

@@ -23,19 +23,19 @@ export class LeafletMap {
     Wind : L.tileLayer('http://{s}.tile.openweathermap.org/map/wind/{z}/{x}/{y}.png?appid={apiKey}', {
       maxZoom: 19,
       attribution: 'Map data &copy; <a href="http://openweathermap.org">OpenWeatherMap</a>',
-      apiKey: "YOUR API KEY HERE",
+      apiKey: "35c57cf166a6ec9dd8bfdcef80de6f0f",
       opacity: 0.5
     }),
     Clouds : L.tileLayer('http://{s}.tile.openweathermap.org/map/clouds/{z}/{x}/{y}.png?appid={apiKey}', {
       maxZoom: 19,
       attribution: 'Map data &copy; <a href="http://openweathermap.org">OpenWeatherMap</a>',
-      apiKey: "YOUR API KEY HERE",
+      apiKey: "35c57cf166a6ec9dd8bfdcef80de6f0f",
       opacity: 0.5
     }),
     Pressure : L.tileLayer('http://{s}.tile.openweathermap.org/map/pressure/{z}/{x}/{y}.png?appid={apiKey}', {
       maxZoom: 19,
       attribution: 'Map data &copy; <a href="http://openweathermap.org">OpenWeatherMap</a>',
-      apiKey: "YOUR API KEY HERE",
+      apiKey: "35c57cf166a6ec9dd8bfdcef80de6f0f",
       opacity: 0.5
     })
   }
