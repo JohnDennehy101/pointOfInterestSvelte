@@ -80,12 +80,10 @@
 </script>
 
 <OffCanvasNav />
-{#if monumentList}
-  <div class="uk-flex-middle uk-text-center" uk-grid>
-    <div
-      class="uk-card uk-card-default uk-card-body uk-box-shadow-large uk-width-1-1"
-    >
-      <div id="monuments-map" class="ui embed" style="height:800px" />
-    </div>
+<div class="uk-flex-middle uk-text-center" uk-grid>
+  <div
+    class="uk-card uk-card-default uk-card-body uk-box-shadow-large uk-width-1-1"
+  >
+    <div id="monuments-map" class="ui embed" style="height:800px" />
   </div>
-{/if}
+</div>
