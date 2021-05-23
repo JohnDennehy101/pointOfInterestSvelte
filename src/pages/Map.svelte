@@ -17,17 +17,14 @@
       zoom: 7,
       minZoom: 1,
     };
-    map = new LeafletMap("donation-map", mapConfig, "Terrain");
+    map = new LeafletMap("monuments-map", mapConfig, "Terrain");
     map.showZoomControl();
     map.addLayerGroup("National Monuments");
     map.showLayerControl();
 
     monumentList = await monumentService.getMonuments();
-    console.log(monumentList);
 
     addMonumentMarkers(monumentList);
-
-    // map.addMarker({lat: lat, lng: lng}, donationStr);
   });
 
   title.set("Point Of Interest Application");
@@ -53,14 +50,7 @@
           "National Monuments"
         );
       }
-
-      //   map.moveTo(12, {
-      //     lat: monumentList[monument].coordinates.latitude,
-      //     lng: monumentList[monument].coordinates.longitude,
-      //   });
     }
-
-    console.log(map);
   }
 </script>
 
@@ -68,6 +58,6 @@
   <div
     class="uk-card uk-card-default uk-card-body uk-box-shadow-large uk-width-1-1"
   >
-    <div id="donation-map" class="ui embed" style="height:800px" />
+    <div id="monuments-map" class="ui embed" style="height:800px" />
   </div>
 </div>
