@@ -5,6 +5,7 @@
     navBar,
     loggedInUserBar,
     loggedInAdminUserBar,
+    navBarIconDisplay,
   } from "../stores";
   import { onMount, getContext } from "svelte";
   import ViewPointOfInterestImage from "../components/ViewPointOfInterestImage.svelte";
@@ -21,6 +22,7 @@
   import MonumentList from "../components/MonumentList.svelte";
   title.set("Monuments");
   subTitle.set("Detailed View");
+  navBarIconDisplay.set("display:block");
 
   const userService = getContext("UserService");
   let userJsonWebToken;
@@ -51,7 +53,6 @@
     id = JSON.parse(localStorage.monument);
     monument = await monumentService.getIndividualMonument(id);
     weatherData = await monumentService.getMonumentWeather(id);
-    console.log(weatherData);
   });
 </script>
 

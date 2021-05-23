@@ -1,9 +1,16 @@
 <script>
-  import { title, subTitle, navBar, welcomeBar } from "../stores";
+  import {
+    title,
+    subTitle,
+    navBar,
+    welcomeBar,
+    navBarIconDisplay,
+  } from "../stores";
   import UserAccountForm from "../components/UserAccountForm.svelte";
   import signupScreenImage from "/src/assets/castle.jpg";
   title.set("Point of Interest Application");
   subTitle.set("Please Sign Up");
+  navBarIconDisplay.set("display:none");
 
   navBar.set({
     bar: welcomeBar,

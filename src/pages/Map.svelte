@@ -6,9 +6,11 @@
     subTitle,
     title,
     loggedInAdminUserBar,
+    navBarIconDisplay,
   } from "../stores";
   import { LeafletMap } from "../services/leaflet-map";
   import { onMount, getContext } from "svelte";
+  import OffCanvasNav from "../components/OffCanvasNav.svelte";
 
   let lat = 53.160858;
   let lng = -7.15242;
@@ -51,6 +53,7 @@
 
   title.set("Point Of Interest Application");
   subTitle.set("Map of all National Monuments");
+  navBarIconDisplay.set("display:block");
   navBar.set({
     bar: loggedInUserBar,
   });
@@ -76,6 +79,7 @@
   }
 </script>
 
+<OffCanvasNav />
 <div class="uk-flex-middle uk-text-center" uk-grid>
   <div
     class="uk-card uk-card-default uk-card-body uk-box-shadow-large uk-width-1-1"

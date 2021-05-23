@@ -5,12 +5,15 @@
     navBar,
     loggedInUserBar,
     loggedInAdminUserBar,
+    navBarIconDisplay,
   } from "../stores";
   import UserAccountForm from "../components/UserAccountForm.svelte";
   import DeleteAccountModal from "../components/DeleteAccountModal.svelte";
   import { onMount, getContext } from "svelte";
+  import OffCanvasNav from "../components/OffCanvasNav.svelte";
   title.set("Settings");
   subTitle.set("Edit Account Details");
+  navBarIconDisplay.set("display:block");
   let userJsonWebToken;
   const userService = getContext("UserService");
 
@@ -32,6 +35,7 @@
   });
 </script>
 
+<OffCanvasNav />
 <div class="uk-container uk-margin">
   <div
     class="uk-child-width-expand uk-flex-center uk-flex-middle uk-text-center"
@@ -49,8 +53,6 @@
         class="uk-card uk-card-default uk-width-xlarge uk-card-body uk-box-shadow-large"
       >
         <h3 class="uk-card-title uk-text-center">Your Details:</h3>
-        <!-- {{> settings-form}}
-                {{> error}} -->
 
         <UserAccountForm signUpAction={false} />
       </div>

@@ -131,7 +131,19 @@ export class MonumentService {
       const response = await axios.get(
         this.baseUrl + "/api/monuments/categories"
       );
-      console.log(response);
+      this.categories = response.data;
+      return this.categories;
+    } catch (error) {
+      return [];
+    }
+  }
+
+
+  async getProvinceCategories() {
+    try {
+      const response = await axios.get(
+        this.baseUrl + "/api/monuments/provinces"
+      );
       this.categories = response.data;
       return this.categories;
     } catch (error) {

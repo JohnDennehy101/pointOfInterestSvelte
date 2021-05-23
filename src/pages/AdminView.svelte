@@ -4,6 +4,20 @@
   import AdminTotalNumberOfUsers from "../components/AdminTotalNumberOfUsers.svelte";
   import AdminTotalNumberOfCategories from "../components/AdminTotalNumberOfCategories.svelte";
   import AdminUserOverviewForm from "../components/AdminUserOverviewForm.svelte";
+  import OffCanvasNav from "../components/OffCanvasNav.svelte";
+  import {
+    title,
+    subTitle,
+    navBar,
+    loggedInUserBar,
+    loggedInAdminUserBar,
+    navBarIconDisplay,
+  } from "../stores";
+
+  title.set("Admin Dashboard");
+  subTitle.set("Application Statistics");
+  navBarIconDisplay.set("display:block");
+
   let monumentList;
   let userList;
   let allMonumentsCount;
@@ -23,6 +37,7 @@
   });
 </script>
 
+<OffCanvasNav />
 <div class="uk-container uk-margin">
   <div class="uk-width-expand@m">
     <h1 class="uk-heading">Application Overview</h1>

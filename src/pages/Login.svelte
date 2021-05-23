@@ -1,9 +1,19 @@
 <script>
-  import { title, subTitle, navBar, welcomeBar } from "../stores";
+  import {
+    title,
+    subTitle,
+    navBar,
+    welcomeBar,
+    navBarIconDisplay,
+  } from "../stores";
   import LoginForm from "../components/LoginForm.svelte";
   import loginScreenImage from "/src/assets/loginScreenImage.jpg";
   title.set("Point of Interest Application");
   subTitle.set("Please Log in");
+  navBarIconDisplay.set("display:none");
+  // let offsetNavIcon = document.getElementsByClassName("fas fa-bars fa-2x");
+
+  // offsetNavIcon[0].style.display = "none";
 
   navBar.set({
     bar: welcomeBar,

@@ -1,6 +1,12 @@
 <script>
-  import { title, subTitle } from "../stores.js";
+  import { title, subTitle, navBarIconDisplay } from "../stores.js";
 </script>
+
+<div class="uk-padding-small uk-first-column">
+  <a href="#" uk-toggle="target: #offcanvas-nav" style={$navBarIconDisplay}>
+    <i class="fas fa-bars fa-2x" title="Index of all monuments" uk-tooltip />
+  </a>
+</div>
 
 <div
   class="uk-width-2-3@m uk-card uk-card-default uk-padding-small uk-visible@m uk-first-column"

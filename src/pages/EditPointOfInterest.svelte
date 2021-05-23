@@ -5,13 +5,16 @@
     navBar,
     loggedInUserBar,
     loggedInAdminUserBar,
+    navBarIconDisplay,
   } from "../stores";
   import { onMount, getContext } from "svelte";
   import PointOfInterestForm from "../components/PointOfInterestForm.svelte";
   import EditPointOfInterestImage from "../components/EditPointOfInterestImage.svelte";
+  import OffCanvasNav from "../components/OffCanvasNav.svelte";
 
   title.set("Point of Interest");
   subTitle.set("Edit Point of Interest");
+  navBarIconDisplay.set("display:block");
 
   const userService = getContext("UserService");
   let userJsonWebToken;
@@ -39,6 +42,7 @@
   const monumentService = getContext("MonumentService");
 </script>
 
+<OffCanvasNav />
 {#if monument}
   <div class="uk-container uk-margin">
     <div class="uk-child-width-expand uk-flex-center uk-text-center" uk-grid>
