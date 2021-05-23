@@ -13,9 +13,6 @@
   title.set("Point of Interest");
   subTitle.set("Edit Point of Interest");
 
-  // navBar.set({
-  //   bar: loggedInUserBar,
-  // });
   const userService = getContext("UserService");
   let userJsonWebToken;
   let id;
