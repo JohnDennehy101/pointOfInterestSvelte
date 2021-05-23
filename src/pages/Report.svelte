@@ -1,11 +1,33 @@
 <script>
-  import { title, subTitle, navBar, loggedInUserBar } from "../stores";
+  import {
+    title,
+    subTitle,
+    navBar,
+    loggedInUserBar,
+    loggedInAdminUserBar,
+  } from "../stores";
   import MonumentList from "../components/MonumentList.svelte";
+  import { getContext, onMount } from "svelte";
+  let userJsonWebToken;
+  let userService = getContext("UserService");
   title.set("Monuments");
   subTitle.set("Monuments added to date");
 
-  navBar.set({
-    bar: loggedInUserBar,
+  onMount(async function () {
+    userJsonWebToken = JSON.parse(localStorage.user);
+    let success = await userService.getIndividualUser(userJsonWebToken);
+
+    if (success) {
+      if (success.userType === "Admin") {
+        navBar.set({
+          bar: loggedInAdminUserBar,
+        });
+      } else {
+        navBar.set({
+          bar: loggedInUserBar,
+        });
+      }
+    }
   });
 </script>
 

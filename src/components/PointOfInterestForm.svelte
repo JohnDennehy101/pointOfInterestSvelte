@@ -2,7 +2,7 @@
   import { push } from "svelte-spa-router";
   import { getContext, onMount } from "svelte";
   const monumentService = getContext("MonumentService");
-  import { LeafletMap } from "../services/leaflet-map";
+  // import { LeafletMap } from "../services/leaflet-map";
   import "leaflet/dist/leaflet.css";
   export let addMonumentAction;
   export let existingMonumentRecord;

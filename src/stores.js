@@ -49,6 +49,17 @@ export const loggedInUserBar = [
  
 ];
 
+export const loggedInAdminUserBar = [
+  {
+  title: "Admin",
+  icon: "fas fa-chart-line fa-3x",
+  colour: "color:rgb(156, 122, 70)",
+  link: "/#/admin"
+},
+...loggedInUserBar,
+
+]
+
 
 
 export const navBar = writable({

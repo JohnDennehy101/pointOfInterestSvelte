@@ -1,5 +1,11 @@
 <script>
-  import { title, subTitle, navBar, loggedInUserBar } from "../stores";
+  import {
+    title,
+    subTitle,
+    navBar,
+    loggedInUserBar,
+    loggedInAdminUserBar,
+  } from "../stores";
   import { onMount, getContext, setContext } from "svelte";
   import PointOfInterestForm from "../components/PointOfInterestForm.svelte";
   import { LeafletMap } from "../services/leaflet-map";
@@ -9,6 +15,7 @@
   subTitle.set("Add a new Point of Interest");
 
   let map;
+  let userJsonWebToken;
   let latitude = 53.360858;
   let longitude = -7.65242;
 
@@ -16,8 +23,23 @@
     bar: loggedInUserBar,
   });
   const monumentService = getContext("MonumentService");
+  const userService = getContext("UserService");
 
   onMount(async function () {
+    userJsonWebToken = JSON.parse(localStorage.user);
+    let success = await userService.getIndividualUser(userJsonWebToken);
+
+    if (success) {
+      if (success.userType === "Admin") {
+        navBar.set({
+          bar: loggedInAdminUserBar,
+        });
+      } else {
+        navBar.set({
+          bar: loggedInUserBar,
+        });
+      }
+    }
     const mapConfig = {
       location: { lat: latitude, lng: longitude },
       zoom: 6,

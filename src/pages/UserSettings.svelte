@@ -1,12 +1,34 @@
 <script>
-  import { title, subTitle, navBar, loggedInUserBar } from "../stores";
+  import {
+    title,
+    subTitle,
+    navBar,
+    loggedInUserBar,
+    loggedInAdminUserBar,
+  } from "../stores";
   import UserAccountForm from "../components/UserAccountForm.svelte";
   import DeleteAccountModal from "../components/DeleteAccountModal.svelte";
+  import { onMount, getContext } from "svelte";
   title.set("Settings");
   subTitle.set("Edit Account Details");
+  let userJsonWebToken;
+  const userService = getContext("UserService");
 
-  navBar.set({
-    bar: loggedInUserBar,
+  onMount(async () => {
+    userJsonWebToken = JSON.parse(localStorage.user);
+    let success = await userService.getIndividualUser(userJsonWebToken);
+
+    if (success) {
+      if (success.userType === "Admin") {
+        navBar.set({
+          bar: loggedInAdminUserBar,
+        });
+      } else {
+        navBar.set({
+          bar: loggedInUserBar,
+        });
+      }
+    }
   });
 </script>
 

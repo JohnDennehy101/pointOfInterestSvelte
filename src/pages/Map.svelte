@@ -1,17 +1,39 @@
 <script>
   import "leaflet/dist/leaflet.css";
-  import { loggedInUserBar, navBar, subTitle, title } from "../stores";
+  import {
+    loggedInUserBar,
+    navBar,
+    subTitle,
+    title,
+    loggedInAdminUserBar,
+  } from "../stores";
   import { LeafletMap } from "../services/leaflet-map";
   import { onMount, getContext } from "svelte";
 
   let lat = 53.160858;
   let lng = -7.15242;
   let monumentList;
+  let userJsonWebToken;
 
+  const userService = getContext("UserService");
   const monumentService = getContext("MonumentService");
 
   let map;
   onMount(async () => {
+    userJsonWebToken = JSON.parse(localStorage.user);
+    let success = await userService.getIndividualUser(userJsonWebToken);
+
+    if (success) {
+      if (success.userType === "Admin") {
+        navBar.set({
+          bar: loggedInAdminUserBar,
+        });
+      } else {
+        navBar.set({
+          bar: loggedInUserBar,
+        });
+      }
+    }
     const mapConfig = {
       location: { lat: lat, lng: lng },
       zoom: 7,

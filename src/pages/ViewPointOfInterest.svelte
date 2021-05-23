@@ -1,6 +1,12 @@
 <script>
-  import { title, subTitle, navBar, loggedInUserBar } from "../stores";
-  import { onMount, getContext, setContext } from "svelte";
+  import {
+    title,
+    subTitle,
+    navBar,
+    loggedInUserBar,
+    loggedInAdminUserBar,
+  } from "../stores";
+  import { onMount, getContext } from "svelte";
   import ViewPointOfInterestImage from "../components/ViewPointOfInterestImage.svelte";
   import ViewImageFullScreen from "../components/ViewImageFullScreen.svelte";
   import MonumentCategoriesComponent from "../components/MonumentCategoriesComponent.svelte";
@@ -16,15 +22,32 @@
   title.set("Monuments");
   subTitle.set("Detailed View");
 
-  navBar.set({
-    bar: loggedInUserBar,
-  });
+  const userService = getContext("UserService");
+  let userJsonWebToken;
+
+  // navBar.set({
+  //   bar: loggedInUserBar,
+  // });
   const monumentService = getContext("MonumentService");
   let monument;
   let weatherData;
   let id;
 
   onMount(async () => {
+    userJsonWebToken = JSON.parse(localStorage.user);
+    let success = await userService.getIndividualUser(userJsonWebToken);
+
+    if (success) {
+      if (success.userType === "Admin") {
+        navBar.set({
+          bar: loggedInAdminUserBar,
+        });
+      } else {
+        navBar.set({
+          bar: loggedInUserBar,
+        });
+      }
+    }
     id = JSON.parse(localStorage.monument);
     monument = await monumentService.getIndividualMonument(id);
     weatherData = await monumentService.getMonumentWeather(id);
