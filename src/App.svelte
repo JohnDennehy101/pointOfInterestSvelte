@@ -12,7 +12,7 @@
   import Report from "./pages/Report.svelte";
   import ViewPointOfInterest from "./pages/ViewPointOfInterest.svelte";
   import AddPointOfInterest from "./pages/AddPointOfInterest.svelte";
-  import EditPointOfInterest from "./pages/editPointOfInterest.svelte";
+  import EditPointOfInterest from "./pages/EditPointOfInterest.svelte";
   import UserSettings from "./pages/UserSettings.svelte";
   import Map from "./pages/Map.svelte";
   import AdminView from "./pages/AdminView.svelte";
