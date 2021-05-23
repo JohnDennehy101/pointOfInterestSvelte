@@ -2,8 +2,11 @@
   import { push } from "svelte-spa-router";
   import { getContext, onMount } from "svelte";
   const monumentService = getContext("MonumentService");
+  import { LeafletMap } from "../services/leaflet-map";
+  import "leaflet/dist/leaflet.css";
   export let addMonumentAction;
   export let existingMonumentRecord;
+  export let mapObject;
 
   // let monument;
   let id;
@@ -24,6 +27,16 @@
   let preview;
   let newCategoryTitle;
   let categoryDivContainer;
+  let marker;
+
+  let addMapMarkerAndZoom = () => {
+    if (latitude && longitude && title) {
+      mapObject.imap._layers = {};
+      marker = mapObject.addMarker({ lat: latitude, lng: longitude }, title);
+
+      mapObject.moveTo(12, { lat: latitude, lng: longitude });
+    }
+  };
 
   onMount(async () => {
     categories = await monumentService.getNonProvinceCategories();
@@ -31,6 +44,10 @@
     categories.forEach((category) => {
       categoryTitles.push(category.title);
     });
+
+    if (!mapObject) {
+      addMapMarkerAndZoom = fieldStyling;
+    }
 
     if (existingMonumentRecord) {
       title = existingMonumentRecord.title;
@@ -445,7 +462,7 @@
             <div class="uk-form-controls">
               <input
                 bind:value={latitude}
-                on:change={fieldStyling}
+                on:change={addMapMarkerAndZoom}
                 class="uk-input"
                 id="form-stacked-text"
                 type="number"
@@ -463,7 +480,7 @@
             <div class="uk-form-controls">
               <input
                 bind:value={longitude}
-                on:change={fieldStyling}
+                on:change={addMapMarkerAndZoom}
                 class="uk-input"
                 id="form-stacked-text"
                 type="number"

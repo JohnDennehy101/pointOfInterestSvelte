@@ -2,14 +2,33 @@
   import { title, subTitle, navBar, loggedInUserBar } from "../stores";
   import { onMount, getContext, setContext } from "svelte";
   import PointOfInterestForm from "../components/PointOfInterestForm.svelte";
+  import { LeafletMap } from "../services/leaflet-map";
+  import "leaflet/dist/leaflet.css";
 
   title.set("Point of Interest");
   subTitle.set("Add a new Point of Interest");
+
+  let map;
+  let latitude = 53.360858;
+  let longitude = -7.65242;
 
   navBar.set({
     bar: loggedInUserBar,
   });
   const monumentService = getContext("MonumentService");
+
+  onMount(async function () {
+    const mapConfig = {
+      location: { lat: latitude, lng: longitude },
+      zoom: 6,
+      minZoom: 1,
+    };
+    map = new LeafletMap("monument-map", mapConfig, "Terrain");
+    map.showZoomControl();
+    map.showLayerControl();
+  });
+
+  console.log(map);
 </script>
 
 <div class="uk-container uk-margin">
@@ -18,16 +37,24 @@
     uk-grid
   >
     <div class="uk-width-auto@m">
-      <img
+      <!-- <img
         width="300"
         src="/src/assets/dashboardImage.jpg"
         alt="Sculpture of Plato"
+      /> -->
+      <div
+        id="monument-map"
+        class="ui embed"
+        style="height:600px; width: 400px"
       />
     </div>
-    <PointOfInterestForm
-      addMonumentAction={true}
-      existingMonumentRecord={undefined}
-    />
+    {#if map}
+      <PointOfInterestForm
+        addMonumentAction={true}
+        existingMonumentRecord={undefined}
+        mapObject={map}
+      />
+    {/if}
     <!-- <div class="uk-width-expand@m">{{> addPointOfInterest }}</div> -->
   </div>
 </div>

@@ -29,6 +29,7 @@
         <PointOfInterestForm
           addMonumentAction={false}
           existingMonumentRecord={monument}
+          mapObject={undefined}
         />
       </div>
       <div class="uk-width-1-2">

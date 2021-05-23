@@ -72,7 +72,6 @@ export class LeafletMap {
     this.overlays[title] = layer;
     this.imap.addLayer(layer);
   }
-
   addLayerGroup(title: string) {
     this.overlays[title] = L.layerGroup([]);
     this.imap.addLayer(this.overlays[title]);
@@ -101,6 +100,7 @@ export class LeafletMap {
 
   addMarker(location: Location, popupText = '', layerTitle = 'default') {
     let group: LayerGroup;
+    
     let marker = L.marker([location.lat, location.lng]);
     if (popupText) {
       var popup = L.popup({ autoClose: false, closeOnClick: false });
@@ -111,8 +111,11 @@ export class LeafletMap {
       group = L.layerGroup([]);
       this.overlays[layerTitle] = group;
       this.imap.addLayer(group);
+       
     } else {
+        
       group = this.overlays[layerTitle] as LayerGroup;
+
     }
     marker.addTo(group);
   }
