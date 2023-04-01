@@ -16,16 +16,15 @@
   import UserSettings from "./pages/UserSettings.svelte";
   import Map from "./pages/Map.svelte";
   import AdminView from "./pages/AdminView.svelte";
-  import dotenv from 'dotenv';
+  
 
-  dotenv.config();
   setContext(
     "UserService",
-    new UserService(process.env.API_URL)
+    new UserService(VITE_API_URL)
   );
   setContext(
     "MonumentService",
-    new MonumentService(process.env.API_URL)
+    new MonumentService(VITE_API_URL)
   );
 
   import { navBar, subTitle, title } from "./stores";
