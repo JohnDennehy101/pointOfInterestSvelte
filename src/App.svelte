@@ -16,14 +16,16 @@
   import UserSettings from "./pages/UserSettings.svelte";
   import Map from "./pages/Map.svelte";
   import AdminView from "./pages/AdminView.svelte";
+  import dotenv from 'dotenv';
 
+  dotenv.config();
   setContext(
     "UserService",
-    new UserService("https://point-of-interest-api.herokuapp.com")
+    new UserService(process.env.API_URL)
   );
   setContext(
     "MonumentService",
-    new MonumentService("https://point-of-interest-api.herokuapp.com")
+    new MonumentService(process.env.API_URL)
   );
 
   import { navBar, subTitle, title } from "./stores";
