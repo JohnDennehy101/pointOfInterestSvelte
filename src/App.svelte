@@ -20,11 +20,11 @@
 
   setContext(
     "UserService",
-    new UserService(VITE_API_URL)
+    new UserService(import meta.env.VITE_API_URL)
   );
   setContext(
     "MonumentService",
-    new MonumentService(VITE_API_URL)
+    new MonumentService(import meta.env.VITE_API_URL)
   );
 
   import { navBar, subTitle, title } from "./stores";
